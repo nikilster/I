@@ -1,0 +1,120 @@
+<?php
+	session_start();
+	
+	if(array_key_exists("id",$_SESSION)) 
+		//redirect
+		redirect();
+		
+	if($_POST)
+	{
+		$email = $_POST["email"];
+		$password = $_POST["password"];
+		
+		//missing input
+		if(!($email && $password))
+		{
+			echo "Please enter an email address and your password";
+		}
+
+		//Good
+		else
+		{
+			include('db.php');
+			$fakeUserId = -1;
+			$db = new Db($fakeUserId);
+			
+			//Try to log in or create the account
+			$result = $db->authenticate($email, $password);
+			
+			if($result["result"])
+			{
+				$_SESSION["id"] = $result["id"];
+				//redirect;
+				redirect();
+			}
+			//Else
+			else
+			//Error message		
+				echo "Please enter a valid email address and password";
+		}
+		
+	}	
+	
+	function redirect()
+	{
+		header("Location: index.php");
+		exit();
+	}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome to</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<!-- My Stuff -->
+	
+	
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Visualize</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+	<form action="" method="POST">
+		<div>
+			email
+			<input type="text" name="email"/>
+		</div>
+		<div>
+			password
+			<input type="password" name="password"/>
+		</div>
+		<div>
+			<input type="submit" value="Go!"/>
+		</div>
+	</form>
+	
+	</div> <!-- /container -->
+  </body>
+</html>
