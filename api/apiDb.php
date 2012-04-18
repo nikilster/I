@@ -5,7 +5,13 @@
 	//Wrapper methods for the db for the web api
 	class APIDb
 	{
-
+	
+		public static function userIdForAuthToken($authToken)
+		{
+			return 1;
+		}
+		
+		
 		//This is static so we can call it without being already authenticated
 		public static function login($email, $password)
 		{
@@ -24,16 +30,47 @@
 				$authToken = $db->getAuthToken($id);
 				
 				//Return the response
-				$return = array('result'=>1, 'data'=>array('authToken'=>$authToken));
-				response($return);
+				$return = array("result"=>1, 'authToken'=>$authToken);
+				return $return;
 			}
 			else
 			{
 				$return = array('result'=>0, 'message'=>"Invalid email or password");
-				response($return);
+				return $return;
 			}
 		}
 
+		//Return the main user components of the page
+		public static function getInformation($userId)
+		{
+			//Construct a new db
+			$db = new Db($userId);	
+			
+			$activities = $db->getActivities();
+			$currentEvent = $db->getCurrentRunningEvent();
+			$completed = $db->getCompletedEventsForToday();
+			
+			return array('activities'=>$activities, 'currentEvent'=>$currentEvent, 'completedEvents'=>$completed);
+		}
+		
+		//Return the status of start activity
+		public static function startEvent($userId, $activityId)
+		{
+			//Construct a new db
+			$db = new Db($userId);
+			
+			//Start the activity and return the json response
+			return $db->startEvent($activityId);
+		}
+		
+		//Stop the event
+		public static function stopEvent($userId, $eventId)
+		{
+			//Construct a new db
+			$db = new Db($userId);
+			
+			return $db->finishCurrentEvent($eventId);
+		}
 	}
 	
 	

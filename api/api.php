@@ -9,16 +9,19 @@
 	include_once('apiMethods.php');
 	
 	//Functions for outputting responses
-	include_once('apiOutput.php');
+	include_once('apiOutput.php');	
+	
+	//Include
+	include_once("apiDb.php");	
 	
 	//Authenticate
-	checkAuthentication();
+	$userId = checkAuthentication();
 	
 	//Make sure the request is in a valid format
 	validate();
 	
 	//Process the request (ie. run the function)
-	processTheRequest();
+	processTheRequest($userId);
 
 ?>
 
@@ -29,7 +32,7 @@
 		
 		Handles seeing what function the user wanted to call and calling that 
 	*/
-	function processTheRequest()
+	function processTheRequest($userId)
 	{		
 		$function = getIntendedFunction();
 		
@@ -39,15 +42,15 @@
 	
 		//Get Information
 		else if($function == APIKeys::$FUNCTION_GET_INFORMATION)
-			getInformation();
+			getInformation($userId);
 		
 		//Start Activity
-		else if($function == APIKeys::$FUNCTION_START_ACTIVITY)
-			startActivity();
+		else if($function == APIKeys::$FUNCTION_START_EVENT)
+			startEvent($userId);
 		
 		//Stop Activity
-		else if($function == APIKeys::$FUNCTION_STOP_ACTIVITY)
-			stopActivity();
+		else if($function == APIKeys::$FUNCTION_STOP_EVENT)
+			stopEvent($userId);
 			
 		//Should never get here
 		else
@@ -66,14 +69,18 @@
 		
 		//First check if it is a login
 		if(getIntendedFunction() == APIKeys::$FUNCTION_LOGIN)
-			return;
+			return 0;
 		
 		//Check the POST['AUTH_TOKEN']
-		if(!goodAuthToken())
+		$userId = APIDb::userIdForAuthToken(getParameter(APIKEYS::$AUTH_TOKEN));
+		
+		if($userId < 1)
 			//If bad return an error response and exit
 			displayError("Invalid Auth Token");
 			
 		//If good, do nothing and continue	
+		
+		return $userId;
 	}
 	
 	/*
@@ -93,8 +100,8 @@
 		//TODO: find a better way to do this
 		if(!($function === APIKeys::$FUNCTION_LOGIN ||
 			 $function === APIKeys::$FUNCTION_GET_INFORMATION ||
-			 $function === APIKeys::$FUNCTION_START_ACTIVITY ||
-			 $function === APIKeys::$FUNCTION_STOP_ACTIVITY))
+			 $function === APIKeys::$FUNCTION_START_EVENT ||
+			 $function === APIKeys::$FUNCTION_STOP_EVENT))
 			displayError("Please specify a valid function");
 
 		//TODO: Any more validation
@@ -145,7 +152,10 @@
 	function goodAuthToken()
 	{
 		//TODO: validate - check the authentication
-		return getParameter(APIKeys::$AUTH_TOKEN) == 1;
-		return true;
+		//return userid
+		if(getParameter(APIKeys::$AUTH_TOKEN) == 1)
+			return 1;
+		else
+			return -1;
 	}
 ?>

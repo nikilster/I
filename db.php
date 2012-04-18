@@ -88,17 +88,20 @@
 	}
 	
 	//Starts a given event
-	public function startEvent($eventId)
+	public function startEvent($activityId)
 	{
 		//Checks to see if a event is already in progress
 		//If so, ends
 		if($event = $this->getCurrentRunningEvent())
 			$this->finishCurrentEvent($event->id);
 		
+		//TODO: only start the activity if that activity id belongs to the current user
+	
 		//Add event
-		$eventIdInt = intval($eventId);
+		$activityIdInt = intval($activityId);
 		$userId = $this->userId;
-		$startEventQuery = "INSERT INTO events (activity_id, user_id, start_time) VALUES ($eventIdInt, $userId, NOW());";
+		$startEventQuery = "INSERT INTO events (activity_id, user_id, start_time) VALUES ($activityIdInt, $userId, NOW());";
+		echo $startEventQuery;
 		return $this->query($startEventQuery);
 	
 	}
@@ -411,6 +414,57 @@
 		
 		$row = mysql_fetch_assoc($result);
 		return $row["authToken"];
+	}
+	
+	/*
+		Choose a user and randomly generate test data for that user for the past week
+	*/
+	public function generateTestData()
+	{
+		//Get the user id
+		$userId = $this->userId;
+		
+		//Get the activity ids and goals
+		$activities = $this->getActivities();
+		$NUM_DAYS = 6;
+
+		//For today and the past NUM_DAYS-1 days
+		for($dayOffset = 0; $dayOffset<$NUM_DAYS; $dayOffset++)
+		{	
+			echo $dayOffset . "<br/>";
+			$dayTimestamp = strtotime(-$dayOffset . " days");
+			$day = date('Y-m-d 0:0:0', $dayTimestamp);
+			
+			//For each activity
+			foreach($activities as $activity)
+			{
+				//Add a random duration
+				//From 0 - 1.5Goal hours
+				$id = $activity->id;
+				$goal = $activity->goal;
+				
+				$percentage = rand(1,15) / 10.0;
+				$minutes = $percentage * $goal * 60;
+				
+				//Add time
+				//Starttime is just midnight
+				$startTime = $day;
+				$endTime = date('Y-m-d H:i:s', strtotime($day . ' +'.$minutes." minutes"));
+				/*$endDate = new DateTime($startTime);
+				$endDate->add(new DateInterval('P'.$minutes.'M'));
+				$endTime = $endDate->format('Y-m-d H:i:s');*/
+				
+				
+				$addEventQuery = "INSERT INTO events (activity_id, user_id, start_time, end_time) VALUES ($id, $userId, '$startTime', '$endTime');";
+				
+				echo $addEventQuery . "<br/>";
+				$result = $this->query($addEventQuery);
+				echo "Result of adding: " . print_r($result) . "<br/><br/>";
+				
+				
+			}
+			
+		}
 	}
  }		
  

@@ -7,7 +7,11 @@
 	*/
 	function response($result)
 	{
-		print_r($result);
+		//Format the response
+		$response = array("result"=>1, "data"=>$result);
+		
+		//JSON
+		echo json_encode($response);
 		
 		//Finished
 		exit();
@@ -25,8 +29,10 @@
 	//TODO: Write This
 	function displayError($message)
 	{
-		//JSON -Create response
-		echo $message;
+		//JSON - Create response
+		$result = array('result'=>-1, 'message'=>$message);
+		
+		echo json_encode($result);
 		
 		//Finished
 		exit();

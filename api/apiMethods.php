@@ -18,7 +18,7 @@
 			displayError("Login: Please supply a email as part of the request");
 		
 		else if(!parameterExists(APIKeys::$PASSWORD))
-			displayError("Login: Please suuply a password as part of the request");
+			displayError("Login: Please suply a password as part of the request");
 		
 		//Get the values
 		$email = getParameter(APIKeys::$EMAIL);
@@ -27,6 +27,9 @@
 		//TODO:any checking 
 		
 		$result = APIDb::login($email, $password);
+		
+		//show response
+		response($result);
 		
 	}
 	
@@ -40,9 +43,10 @@
 		Activities, Event
 	*/
 	
-	function getInformation()
+	function getInformation($userId)
 	{
-	
+		$result = APIDb::getInformation($userId);
+		response($result);
 	}
 		
 	
@@ -53,9 +57,17 @@
 		Starts the specified activity. (Ends any previous running activity)		
 	*/
 
-	function startActivity()
+	function startEvent($userId)
 	{
-	
+		//Checks
+		if(!parameterExists(APIKeys::$ACTIVITY_ID))
+			displayError("Start Event: Please supply a valid activity id as part of the request");
+		
+		$activityId = getParameter(APIKeys::$ACTIVITY_ID);
+		$result = APIDb::startEvent($userId, $activityId);
+		
+		//Display Response
+		response($result);
 	}
 	
 	
@@ -64,8 +76,17 @@
 		
 		Stops the current activity.
 	*/
-	function stopActivity()
+	function stopEvent($userId)
 	{
+		//Check
+		if(!parameterExists(APIKeys::$EVENT_ID))
+			displayError("Stop Event: Please supply a valid event id as part of the request");
+			
+		$eventId = getParameter(APIKeys::$EVENT_ID);
+		$result = APIDb::stopEvent($userId, $eventId);
+		
+		//Display Response
+		response($result);
 	}
 			
 		
