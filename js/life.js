@@ -23,6 +23,8 @@ ACTIVITY_DAY_TITLE_SELECTOR = ".day .title";
 ACTIVITY_WEEK_SELECTOR = ".week";
 ACTIVITY_WEEK_VALUE_SELECTOR = ".week .value";
 
+ACTIVITY_VISUALIZATION_SELECTOR = ".visualization";
+
 CSS_CLASS_GOOD = "good";
 CSS_CLASS_MEDIUM = "medium";
 CSS_CLASS_BAD = "bad";
@@ -84,7 +86,7 @@ function setUpLifeWeekGraph(data)
 	for(var dayIndex=0; dayIndex < weekActivityData.length; dayIndex++)
 		weekData.push(percentageForDay(weekActivityData[dayIndex]));
 		
-	addGraph(weekData, dayLabels, div);
+	addGraph(weekData, dayLabels, div, "life");
 }
 
 
@@ -119,7 +121,7 @@ function setUpActivity(activity, activitiesPercentages, days)
 	createActivityDiv(activity);
 	setUpActivityDay(activity, activitiesPercentages[activitiesPercentages.length-1]);
 	setUpActivityBlockWeek(activity, activitiesPercentages);
-	//setUpActivityVisualization(activity, activitiesPercentages, days);
+	setUpActivityVisualization(activity, activitiesPercentages, days);
 }
 
 function createActivityDiv(activity)
@@ -136,7 +138,9 @@ function createActivityDiv(activity)
 					'<span class="value"></span><span class="percentage">%</span>',
 					'<div class="duration">Week</div>',
 				'</div>',
-				'<div class="timeseries block"></div>',
+				'<div class="timeseries block">',
+				'<div class="visualization">',
+				'</div>',
 			'</div>'].join('\n');
 		
 	//Create div
@@ -179,6 +183,22 @@ function setUpActivityBlockWeek(activity, activitiesPercentages)
 	$(activitySelector + ACTIVITY_WEEK_SELECTOR).addClass(colorClass);
 }
 
+/*
+	Set up Visualization
+*/
+function setUpActivityVisualization(activity, activitiesPercentages, days)
+{
+	var data = [];
+	var labels = days;
+	var div = $(ACTIVITY_SELECTOR + activity.id + " " + ACTIVITY_VISUALIZATION_SELECTOR)[0];
+	
+	//add for each day
+	for(var i=0; i < activitiesPercentages.length; i++)
+		data.push(getActivityPercentage(activitiesPercentages[i], activity));
+		
+	//Graph
+	addGraph(data, labels, div, activity.name);
+}
 
 
 
@@ -192,7 +212,7 @@ function setUpActivityBlockWeek(activity, activitiesPercentages)
 	Adds a graph to the specified div
 	
 */	
-function addGraph(data, labels, div)
+function addGraph(data, labels, div, activityName)
 {
 
 	var title = "";
@@ -294,7 +314,7 @@ function addGraph(data, labels, div)
 
 
 	options.xAxis.categories = labels;
-	options.tooltip.pointFormat = '<span style="color:{point.color}; font-weight:bold;">{point.name}:</span> <span style="font-weight:bold;">{point.y}</span>% of life goals achieved';
+	options.tooltip.pointFormat = '<span style="color:{point.color}; font-weight:bold;">{point.name}:</span> <span style="font-weight:bold;">{point.y}</span>% of '+activityName+' goals achieved';
 	options.yAxis.title.text = "";
 
 	//No Ticks
