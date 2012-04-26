@@ -8,6 +8,26 @@
 		
 	}
 
+	function getDayInitialFormattedString($dayOffset)
+	{
+	
+		if($dayOffset == 0)
+			return getDayFormattedString($dayOffset);
+		else
+		//Return first character
+		return substr(getDayFormattedString($dayOffset), 0,3);
+	}
+	
+	function getDayFormattedString($dayOffset)
+	{
+		//Just the day: "Sunday"
+		$dateFormatString = "l";
+		if($dayOffset == 0)
+			return "Today";
+		else 
+			return formattedDate($dayOffset, $dateFormatString);// w
+	}
+	
 	//f
 	function formattedDate($dayOffset, $dateFormatString)
 	{

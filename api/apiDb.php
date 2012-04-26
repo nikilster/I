@@ -8,7 +8,10 @@
 	
 		public static function userIdForAuthToken($authToken)
 		{
-			return 1;
+			$fakeUserId = -1;
+			$db = new Db($fakeUserId);
+			
+			return $db->userIdForAuthToken($authToken);
 		}
 		
 		
@@ -54,7 +57,7 @@
 		}
 		
 		//Return the status of start activity
-		public static function startEvent($userId, $activityId)
+		public static function startActivity($userId, $activityId)
 		{
 			//Construct a new db
 			$db = new Db($userId);

@@ -1,47 +1,11 @@
 <?php
 	
-	include_once('login.php');
-	$id = checkLogin();
-
-	include_once('users.php');
-	//Check which user we are trying to see
-	$userToShow = getUsersPage($id);
+	include_once('main.php');
 	
-	
-	//Include
-	include_once('db.php');
-	include_once('event.php');
-	include_once('util.php');
-	//timer
-	//Stop
-	//Activity 1
-	//Activity 2
-	//Activity 3
-	
-	//History
-	//Swim @4:35pm 4min
-	//Eat @3:32 12 min
-	//Get the current running event
-	$db = new Db($userToShow);	
-	$activities = $db->getActivities();
-	
-	//If the user needs to create activities - take them to the create activities page
-	if(noActivity($activities))
-		redirectToCreateActvitiesPage();
-		
+	//$activities is already set		
 	$currentEvent = $db->getCurrentRunningEvent();
 	$completed = $db->getCompletedEventsForToday();
 	
-	function noActivity($activities)
-	{
-		return count($activities) == 0;
-	}
-	
-	function redirectToCreateActvitiesPage()
-	{
-		header("Location: createActivities.php");
-		exit();
-	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,21 +16,21 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link href="css/main.css" rel="stylesheet" type="text/css"/>
+	<link href="../css/main.css" rel="stylesheet" type="text/css"/>
 	
 	<!-- My Stuff see.php -->
-	<script type="text/javascript" src="d3/d3.js"></script>
-	<script type="text/javascript" src="d3/d3.layout.js"></script>
+	<script type="text/javascript" src="../d3/d3.js"></script>
+	<script type="text/javascript" src="../d3/d3.layout.js"></script>
 	<link href="css/see.css" rel="stylesheet" type="text/css"/>
-	<script type="text/javascript" src="js/event.js" ></script>
-	<script type="text/javascript" src="js/graph.js" ></script>
-	<script type="text/javascript" src="js/pie-chart-d3.js" ></script>
+	<script type="text/javascript" src="../js/event.js" ></script>
+	<script type="text/javascript" src="../js/graph.js" ></script>
+	<script type="text/javascript" src="../js/pie-chart-d3.js" ></script>
 	
 	<!-- My Stuff index.php -->
-	<script type="text/javascript" src="js/main.js" ></script>
-	<script type="text/javascript" src="js/event.js" ></script>
-	<script type="text/javascript" src="js/time.js" ></script>
-	<script type="text/javascript" src="js/activity.js" ></script>
+	<script type="text/javascript" src="../js/main.js" ></script>
+	<script type="text/javascript" src="../js/event.js" ></script>
+	<script type="text/javascript" src="../js/time.js" ></script>
+	<script type="text/javascript" src="../js/activity.js" ></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
 	
 	
@@ -95,16 +59,6 @@
 				echo "STATE.data.push(" . json_encode($db->getData(getDateString($dayOffset))) . "); \n";
 				echo "STATE.days.push('" . getDayFormattedString($dayOffset) . "'); \n";
 			}		
-			
-			function getDayFormattedString($dayOffset)
-			{
-				//Just the day: "Sunday"
-				$dateFormatString = "l";
-				if($dayOffset == 0)
-					return "Today";
-				else 
-					return formattedDate($dayOffset, $dateFormatString);// w
-			}
 	?>
 	
 		
@@ -142,13 +96,13 @@
 	</script>
 	
     <!-- Le styles -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -177,7 +131,7 @@
             <ul class="nav">
               <li class="active"><a href="index.php">Home</a></li>
 			  <li> <a href="stats.php">Friends</a></li>
-              <li><a href="logout.php">Logout</a></li>
+              <li><a href="../auth/logout.php">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -267,13 +221,13 @@
 	</div> <!-- /container -->
 	
 	<!-- Javascript - Placed at the end of the document so pages load faster! -->
-	<script src="bootstrap/js/bootstrap-button.js"></script>
-	<script src="bootstrap/js/bootstrap-collapse.js"></script>
+	<script src="../bootstrap/js/bootstrap-button.js"></script>
+	<script src="../bootstrap/js/bootstrap-collapse.js"></script>
 
 	
 	<!-- Highcharts -->
-	<script src="Highcharts-2.2.0/js/highcharts.js" type="text/javascript"></script>
-	<script type="text/javascript" src="js/bar-chart-hc.js" ></script>
+	<script src="../Highcharts-2.2.0/js/highcharts.js" type="text/javascript"></script>
+	<script type="text/javascript" src="../js/bar-chart-hc.js" ></script>
 
   </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 	
-	include_once('login.php');
+	include_once('../auth/login.php');
 	$id = checkLogin();
 
 	
@@ -25,7 +25,7 @@
 			&& functionValidate($activityName3, $goalDuration3))
 		{
 		
-			include_once('db.php');
+			include_once('../classes/db.php');
 			$db = new Db($id);	
 			$result1 = $db->createActivity($activityName1, $goalDuration1);
 			$result2 = $db->createActivity($activityName2, $goalDuration2);
@@ -68,18 +68,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-	<link href="css/createActivities.css" rel="stylesheet">
+	<link href="../css/createActivities.css" rel="stylesheet">
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
 	
     <!-- Le styles -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -159,7 +159,7 @@
 	</div> <!-- /container -->
 	
 	<!-- Javascript - Placed at the end of the document so pages load faster! -->
-	<script src="bootstrap/js/bootstrap-button.js"></script>
+	<script src="../bootstrap/js/bootstrap-button.js"></script>
 
 	</body>
 </html>

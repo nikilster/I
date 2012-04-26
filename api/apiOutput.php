@@ -8,7 +8,7 @@
 	function response($result)
 	{
 		//Format the response
-		$response = array("result"=>1, "data"=>$result);
+		$response = array("apiResult"=>1, "data"=>$result);
 		
 		//JSON
 		echo json_encode($response);

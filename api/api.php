@@ -45,8 +45,8 @@
 			getInformation($userId);
 		
 		//Start Activity
-		else if($function == APIKeys::$FUNCTION_START_EVENT)
-			startEvent($userId);
+		else if($function == APIKeys::$FUNCTION_START_ACTIVITY)
+			startActivity($userId);
 		
 		//Stop Activity
 		else if($function == APIKeys::$FUNCTION_STOP_EVENT)
@@ -100,7 +100,7 @@
 		//TODO: find a better way to do this
 		if(!($function === APIKeys::$FUNCTION_LOGIN ||
 			 $function === APIKeys::$FUNCTION_GET_INFORMATION ||
-			 $function === APIKeys::$FUNCTION_START_EVENT ||
+			 $function === APIKeys::$FUNCTION_START_ACTIVITY ||
 			 $function === APIKeys::$FUNCTION_STOP_EVENT))
 			displayError("Please specify a valid function");
 
@@ -143,19 +143,4 @@
 		return getParameter(APIKeys::$POST_FUNCTION);
 	}
 	
-	/* 
-		Good Auth Token
-		
-		Validates the auth token	
-	*/
-	//TODO:Finish
-	function goodAuthToken()
-	{
-		//TODO: validate - check the authentication
-		//return userid
-		if(getParameter(APIKeys::$AUTH_TOKEN) == 1)
-			return 1;
-		else
-			return -1;
-	}
 ?>

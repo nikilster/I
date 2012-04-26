@@ -1,10 +1,10 @@
 Generating Test Data:
 <?php
 
-	include_once('login.php');
+	include_once('../auth/login.php');
 	$id = checkLogin();
 	
-	include_once('db.php');
+	include_once('../classes/db.php');
 	$db = new Db($id);
 	
 	$db->generateTestData();

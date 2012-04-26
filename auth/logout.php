@@ -7,6 +7,6 @@
 	//1 second after the start of unix tim3es 
 	setcookie("id",'', 1);
 	
-	header("Location: authenticate.php");
+	header("Location: ../web/authenticate.php");
 	
 ?>

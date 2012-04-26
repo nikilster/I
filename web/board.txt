@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head>
+</head>
+<body>
+	<div id="container">
+		<div class="summary">
+			<div class="life"></div>
+			<div></div>
+			<div></div>
+		</div>
+		<div class="activity_row"></div>
+		<div class="activity_row"></div>
+	</div>
+</body>
+</html>

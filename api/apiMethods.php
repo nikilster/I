@@ -57,14 +57,14 @@
 		Starts the specified activity. (Ends any previous running activity)		
 	*/
 
-	function startEvent($userId)
+	function startActivity($userId)
 	{
 		//Checks
 		if(!parameterExists(APIKeys::$ACTIVITY_ID))
 			displayError("Start Event: Please supply a valid activity id as part of the request");
 		
 		$activityId = getParameter(APIKeys::$ACTIVITY_ID);
-		$result = APIDb::startEvent($userId, $activityId);
+		$result = APIDb::startActivity($userId, $activityId);
 		
 		//Display Response
 		response($result);

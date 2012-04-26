@@ -15,7 +15,7 @@
 		//Function names
 		public static $FUNCTION_LOGIN = "login";
 		public static $FUNCTION_GET_INFORMATION = "getInformation";
-		public static $FUNCTION_START_EVENT = "startEvent";
+		public static $FUNCTION_START_ACTIVITY = "startActivity";
 		public static $FUNCTION_STOP_EVENT = "stopEvent";
 	}
 

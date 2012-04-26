@@ -1,7 +1,7 @@
 <?php
  
  //Settings file
- include_once "configuration.php";
+ include_once "../configuration.php";
  include_once "event.php";
  include_once "error.php";
  include_once "activity.php";
@@ -101,7 +101,7 @@
 		$activityIdInt = intval($activityId);
 		$userId = $this->userId;
 		$startEventQuery = "INSERT INTO events (activity_id, user_id, start_time) VALUES ($activityIdInt, $userId, NOW());";
-		echo $startEventQuery;
+		
 		return $this->query($startEventQuery);
 	
 	}
@@ -263,7 +263,7 @@
 		//Generate a random one
 		$authToken = md5($email . date( 'Y-m-d H:i:s'));
 		
-		$createUserQuery = "INSERT INTO users (first_name, last_name, email, password, authToken) VALUES ('$firstName', '$lastName', '$email', '$password', '$authToken');";
+		$createUserQuery = "INSERT INTO users (first_name, last_name, email, password, auth_token) VALUES ('$firstName', '$lastName', '$email', '$password', '$authToken');";
 		$result = $this->query($createUserQuery);
 		
 		$result = $this->getLoginResult($email, $password);
@@ -357,6 +357,11 @@
 			if(array_key_exists($currActivity->id, $activityTimes))
 				$activityInfo['duration'] = $activityTimes[$currActivity->id];
 			
+			//Add Percentage
+			//***Duration is in seconds.  Goal is in hours.
+			$SECONDS_IN_AN_HOUR = 3600;
+			$activityInfo['percentage'] = 100 * ((double)$activityInfo['duration'] / ($SECONDS_IN_AN_HOUR*$activityInfo['goal']));
+			
 			//Add to array
 			array_push($compiledActivities, $activityInfo);
 		}
@@ -405,7 +410,7 @@
 	public function getAuthToken($id)
 	{
 		$id = intval($id);
-		$getAuthTokenQuery = "SELECT authToken FROM users WHERE id = $id"; 
+		$getAuthTokenQuery = "SELECT auth_token FROM users WHERE id = $id"; 
 		
 		$result = $this->query($getAuthTokenQuery);
 		
@@ -413,9 +418,33 @@
 			error("getAuthToken: Invalid user id");
 		
 		$row = mysql_fetch_assoc($result);
-		return $row["authToken"];
+		return $row["auth_token"];
 	}
 	
+	
+	public function userIdForAuthToken($authToken)
+	{
+	
+		//TODO: sanitize
+		$authToken = $this->cleanForDb($authToken);
+		$getUserIdQuery = "SELECT id FROM users WHERE auth_token = '$authToken'";
+		
+		$result = $this->query($getUserIdQuery);
+		
+			
+		if(mysql_num_rows($result) == 0)
+			return 0;
+			
+		else if(mysql_num_rows($result) == 1)
+		{
+			$row = mysql_fetch_assoc($result);
+			return $row["id"];
+		}
+		else //(mysql_num_rows($result) > 1)
+			error("More than 1 user has the same auth token! Auth token collision!");
+		
+		return -1;
+	}
 	/*
 		Choose a user and randomly generate test data for that user for the past week
 	*/
@@ -426,7 +455,7 @@
 		
 		//Get the activity ids and goals
 		$activities = $this->getActivities();
-		$NUM_DAYS = 6;
+		$NUM_DAYS = 7;
 
 		//For today and the past NUM_DAYS-1 days
 		for($dayOffset = 0; $dayOffset<$NUM_DAYS; $dayOffset++)

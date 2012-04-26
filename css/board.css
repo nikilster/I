@@ -1,0 +1,158 @@
+#board
+{
+	width: 1400px;
+}
+
+.life
+{
+	height: 250px;
+	clear: both;
+	float: left;
+}
+
+.activity
+{
+	height: 250px;
+	clear: both;
+	float: left;
+}
+.block
+{
+	position: relative;
+	float: left;
+	height: 208px;
+	
+	margin:1px;
+	padding:19px;
+	background-color: #F5F5F5;
+	border: 1px solid #EEE;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0, 0.05);
+}
+.score
+{
+	width: 250px;
+	
+	/* -2px for padding
+	  210 - margin
+	  19+margin
+	 */
+	height:188px;
+	padding-top:40px;
+	
+	/* Font for big numbers */
+	font-size: 110px;
+	font-weight: bold;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-align: center;
+	letter-spacing: -3px;
+	/*To override the bootstrap settings */
+	line-height: normal;
+}
+
+.title
+{
+	position:absolute;
+	top:11px;
+	left:11px;
+	
+	text-transform: uppercase;
+	font-variant: small-caps;
+	color:#333;
+	font-size:30px;
+	letter-spacing:normal;
+}
+
+.percentage
+{
+	font-size: 75px;
+	letter-spacing: -3px;
+	position: relative;
+	left: -3px;
+}
+
+.duration
+{
+	position: relative;
+	top: 5px;
+	
+	font-size: 27px;
+	text-transform: uppercase;
+	color: #999;
+}
+.meter
+{
+	width: 250px;
+}
+
+.meterBar
+{
+    height:180px;
+    width:80px;
+    border:solid #EEE 2px;
+    position:absolute;
+    left:40px;
+}
+.meterFill
+{
+    height:100px;
+    width:100%;
+    background-color:#CCCC00;
+    
+    position:relative;
+    top:50%;
+    
+}
+
+.scores
+{
+    height:180px;
+    width:140px;
+    left:135px;
+    font-size:45px;
+    line-height:1.1em;
+    position:absolute;
+}
+
+.scores .summary
+{
+    font-size:18px;
+    font-variant:small-caps;
+    margin-left:-4px;
+}
+.scores .header
+{
+    font-size:20px;
+    text-transform:uppercase;
+    font-weight:bold;
+    line-height:normal;
+}
+
+.timeseries
+{
+	width: 600px;
+}
+
+.visualization
+{
+	height:200px;
+}
+.good
+{
+	color:#00CC00;
+}
+
+.medium
+{
+    color:#CCCC00;
+}
+
+.bad
+{
+    color:#CC0000;
+}
