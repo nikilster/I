@@ -1,6 +1,8 @@
 <?php
 	
-	include_once('../db.php');
+	include_once('../classes/db.php');
+	//for the date format
+	include_once('../util/util.php');
 	
 	//Wrapper methods for the db for the web api
 	class APIDb
@@ -51,9 +53,11 @@
 			
 			$activities = $db->getActivities();
 			$currentEvent = $db->getCurrentRunningEvent();
-			$completed = $db->getCompletedEventsForToday();
+			//$completed = $db->getCompletedEventsForToday();
+			//Percentages for today
+			$percentagesForToday = $db->getData(getDateString(0));
 			
-			return array('activities'=>$activities, 'currentEvent'=>$currentEvent, 'completedEvents'=>$completed);
+			return array('activities'=>$activities, 'currentEvent'=>$currentEvent, 'percentages' => $percentagesForToday);
 		}
 		
 		//Return the status of start activity
@@ -64,6 +68,16 @@
 			
 			//Start the activity and return the json response
 			return $db->startEvent($activityId);
+		}
+		
+		//Returns the current running event
+		public static function getCurrentRunningEvent($userId)
+		{
+			//Construct a new db
+			$db = new Db($userId);
+			
+			//Get the current Running Events
+			return $currentEvent = $db->getCurrentRunningEvent();	
 		}
 		
 		//Stop the event

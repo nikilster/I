@@ -64,7 +64,11 @@
 			displayError("Start Event: Please supply a valid activity id as part of the request");
 		
 		$activityId = getParameter(APIKeys::$ACTIVITY_ID);
-		$result = APIDb::startActivity($userId, $activityId);
+		$startActivity = APIDb::startActivity($userId, $activityId);
+		
+		$currentEvent = APIDb::getCurrentRunningEvent($userId);
+		
+		$result = array('result'=>$startActivity, 'currentRunningEvent'=>$currentEvent);
 		
 		//Display Response
 		response($result);

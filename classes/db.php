@@ -5,6 +5,7 @@
  include_once "event.php";
  include_once "error.php";
  include_once "activity.php";
+ include_once "../util/util.php";
  
  //Set default timezone
  date_default_timezone_set('America/Los_Angeles');
@@ -472,7 +473,7 @@
 				$id = $activity->id;
 				$goal = $activity->goal;
 				
-				$percentage = rand(1,15) / 10.0;
+				$percentage = rand(1,11) / 10.0;
 				$minutes = $percentage * $goal * 60;
 				
 				//Add time

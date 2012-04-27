@@ -1,6 +1,7 @@
 #board
 {
-	width: 1400px;
+	width: 1230px;
+	margin:auto;
 }
 
 .life
@@ -24,7 +25,7 @@
 	
 	margin:1px;
 	padding:19px;
-	background-color: #F5F5F5;
+	background-color:black;
 	border: 1px solid #EEE;
 	border: 1px solid rgba(0, 0, 0, 0.05);
 	-webkit-border-radius: 4px;
@@ -83,7 +84,7 @@
 	
 	font-size: 27px;
 	text-transform: uppercase;
-	color: #999;
+	color: #908C84;
 }
 .meter
 {
@@ -102,7 +103,7 @@
 {
     height:100px;
     width:100%;
-    background-color:#CCCC00;
+    background-color:#ffc40d;
     
     position:relative;
     top:50%;
@@ -144,15 +145,15 @@
 }
 .good
 {
-	color:#00CC00;
+	color:#62BC62;/*00CC00;*/
 }
 
 .medium
 {
-    color:#CCCC00;
+    color:#FFD042/*CCCC00;*/
 }
 
 .bad
 {
-    color:#CC0000;
+    color:#D3557D/*CC0000*/;
 }

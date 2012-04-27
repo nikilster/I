@@ -10,6 +10,7 @@
 BOARD_SELECTOR = "#board";
 
 LIFE_DAY_SELECTOR = ".life .value";
+LIFE_TITLE_SELECTOR = ".life .title";
 LIFE_COLOR_DAY_SELECTOR = ".life .score";
 LIFE_GRAPH_SELECTOR = ".life .visualization";
 
@@ -31,6 +32,16 @@ CSS_CLASS_BAD = "bad";
 
 DATA_PERCENTAGE_KEY = "percentage";
 DATA_ACTIVITY_ID_KEY = "id";
+
+VISUALIZATION_BACKGROUND_COLOR = "black";
+BAD_COLOR_HEX = "#D3557D";
+MEDIUM_COLOR_HEX = "#FFD042";
+GOOD_COLOR_HEX =  "#62BC62";
+
+MEDIUM_THRESHOLD = 20;
+GOOD_THRESHOLD = 70;
+
+COLORS = ["#0000FF", "#8000FF", "#FF00FF", "#FF0080", "#FF8000", "#FFFF00", "#00FF00"];
 
 /*
 	setUpLife
@@ -69,6 +80,7 @@ function setUpLifeDayBlock(dayInfo)
 	
 	//
 	$(LIFE_DAY_SELECTOR).text(cumulativePercentage);
+	$(LIFE_TITLE_SELECTOR).css('color', COLORS[0]);
 	$(LIFE_COLOR_DAY_SELECTOR).addClass(colorClass);
 
 }
@@ -108,7 +120,7 @@ function setUpTheActivities(data)
 	
 	//Setup each activity
 	for(var i=0; i < data.activities.length; i++)
-		setUpActivity(data.activities[i], activitiesPercentages, days);
+		setUpActivity(data.activities[i], activitiesPercentages, days, i+1);
 }
 
 /*
@@ -116,10 +128,10 @@ function setUpTheActivities(data)
 
 		Creates an activity (an entire row)
 */
-function setUpActivity(activity, activitiesPercentages, days)
+function setUpActivity(activity, activitiesPercentages, days, position)
 {
 	createActivityDiv(activity);
-	setUpActivityDay(activity, activitiesPercentages[activitiesPercentages.length-1]);
+	setUpActivityDay(activity, activitiesPercentages[activitiesPercentages.length-1], position);
 	setUpActivityBlockWeek(activity, activitiesPercentages);
 	setUpActivityVisualization(activity, activitiesPercentages, days);
 }
@@ -154,7 +166,7 @@ function createActivityDiv(activity)
 
 	Sets up the activity day block
 */
-function setUpActivityDay(activity, dayData)
+function setUpActivityDay(activity, dayData, position)
 {
 	var percentage = getActivityPercentage(dayData, activity);
 	var title = activity.name;
@@ -162,6 +174,7 @@ function setUpActivityDay(activity, dayData)
 	
 	var activitySelector = ACTIVITY_SELECTOR+activity.id + " ";
 	$(activitySelector + ACTIVITY_DAY_TITLE_SELECTOR).html(title);
+	$(activitySelector + ACTIVITY_DAY_TITLE_SELECTOR).css('color',COLORS[position]);
 	$(activitySelector + ACTIVITY_DAY_VALUE_SELECTOR).html(percentage);
 	//TODO: move the color to a specific div
 	$(activitySelector + ACTIVITY_DAY_SELECTOR).addClass(colorClass);
@@ -236,14 +249,14 @@ function addGraph(data, labels, div, activityName)
 		percentages.push({
 				//Same as xAxis category
 				name: labels[i],
-				color: colorSchemer2[i],
+				color: getHexColorForPercentage(data[i]),
 				y: data[i]
 				});
 	
 	//Calculate the max
 	//Max of 100 and the maximum Y value
 	var maxYValue = Math.max(100, Math.max.apply(Math, data));
-	
+
 	//Options for the Chart
 	var options = {
 	
@@ -253,7 +266,7 @@ function addGraph(data, labels, div, activityName)
 		style: {
 			fontFamily: fontFamily,
 		},
-		backgroundColor:"#f5f5f5"
+		backgroundColor:VISUALIZATION_BACKGROUND_COLOR
 	},
 	
 	title: {
@@ -280,6 +293,8 @@ function addGraph(data, labels, div, activityName)
 				color: titleColor					
 			}
 		},
+		//No grid lines (0px remove this to add them)
+		gridLineWidth:0,
 		gridLineColor:yAxisLines,
 		labels: {
 			style: {
@@ -398,12 +413,28 @@ function percentageForDay(dayActivities)
 */
 function getCSSColorClass(percentage)
 {
-	if(percentage < 20)
+	if(percentage < MEDIUM_THRESHOLD)
 		return CSS_CLASS_BAD;
 	
-	else if(percentage < 70)
+	else if(percentage < GOOD_THRESHOLD)
 		return CSS_CLASS_MEDIUM;
 	
 	else
 		return CSS_CLASS_GOOD;
+}
+
+/*
+	Get Hex Color For Percentage
+	
+*/
+function getHexColorForPercentage(percentage)
+{
+	if(percentage < MEDIUM_THRESHOLD)
+		return BAD_COLOR_HEX;
+	
+	else if(percentage < GOOD_THRESHOLD)
+		return MEDIUM_COLOR_HEX;
+	
+	else
+		return GOOD_COLOR_HEX;
 }

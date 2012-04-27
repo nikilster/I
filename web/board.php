@@ -1,3 +1,8 @@
+<?php
+	
+	//Auth / Setup 
+	include_once('main.php');
+?>
 <!DOCTYPE html>
 <head>
 
@@ -5,9 +10,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-<link type="text/css" rel="stylesheet" href="../css/board.css"/>
-<link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="../css/board.css"/>
+	<link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+	<style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+	<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 		
 </head>
 <body>
@@ -19,9 +29,6 @@
 
 	<script>
 			<?php 
-			
-			//Auth / Setup 
-			include_once('main.php');
 			
 			//From main
 			//$activities is set			
@@ -60,6 +67,26 @@
 				setUpLife(DATA);
 			});
 	</script>
+	
+	<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Visualize</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="index.php">Home</a></li>
+			  <li> <a href="stats.php">Friends</a></li>
+              <li><a href="../auth/logout.php">Logout</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
 	
 	<div id="board">
 		
