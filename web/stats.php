@@ -51,6 +51,7 @@
           <a class="brand" href="#">Visualize</a>
           <div class="nav-collapse">
             <ul class="nav">
+			  <li><a href="board.php">Life</a></li>
               <li><a href="index.php">Home</a></li>
 			  <li class="active"><a href=".">Friends</a></li>
               <li><a href="../auth/logout.php">Logout</a></li>

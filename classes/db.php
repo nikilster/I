@@ -360,6 +360,7 @@
 			
 			//Add Percentage
 			//***Duration is in seconds.  Goal is in hours.
+			//TODO: dont let the goal be 0
 			$SECONDS_IN_AN_HOUR = 3600;
 			$activityInfo['percentage'] = 100 * ((double)$activityInfo['duration'] / ($SECONDS_IN_AN_HOUR*$activityInfo['goal']));
 			
