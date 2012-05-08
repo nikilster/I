@@ -10,7 +10,10 @@
 		
 		//Try Cookie
 		if(array_key_exists("id", $_COOKIE))
+		{
+			echo "cookie is set!";
 			return intval($_COOKIE["id"]);			
+		}
 		
 		//No valid login information
 		header("Location: authenticate.php");

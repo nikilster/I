@@ -97,7 +97,8 @@
 		//Unix time maxmium 2038
 		$TWENTY_YEARS_IN_SECONDS = 60*60*24*365*20;
 		$cookieExpiration = time() + $TWENTY_YEARS_IN_SECONDS;
-		setcookie("id", $id, $cookieExpiration);
+		//Path Parameter
+		setcookie("id", $id, $cookieExpiration, "/");
 		
 		//redirect;
 		redirect();
