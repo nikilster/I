@@ -3,13 +3,15 @@
 	include_once('../auth/login.php');
 	$id = checkLogin();
 
+	
 	include_once('../util/users.php');
+	include_once('../classes/db.php');
+
 	//Check which user we are trying to see
 	$userToShow = getUsersPage($id);
 	
 	
 	//Include
-	include_once('../classes/db.php');
 	include_once('../classes/event.php');
 	include_once('../util/util.php');
 	//timer

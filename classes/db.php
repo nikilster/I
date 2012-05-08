@@ -29,7 +29,30 @@
 		//Set userId
 		$this->userId = intval($id);
 	}
-
+	
+	//Checks to see if this is a valid user id
+	public static function validUserId($userId)
+	{
+		$anonmymousDB = new self(0);
+		
+		$id = $anonmymousDB->cleanForDB($userId);
+		$query = "SELECT count(*) AS count FROM users WHERE id = $id";
+		$result = $anonmymousDB->query($query);
+		
+		$row = mysql_fetch_assoc($result);
+		$count = $row['count'];
+		
+		//more than 1 user!? error
+		if($count > 1) 
+		{
+			$this->error('More than 1 user with the same id!');
+			return false;
+		}
+		
+		//1
+		if($count == 1) return true;
+		else return false;
+	}
 	
 	private function query($query)
 	{
