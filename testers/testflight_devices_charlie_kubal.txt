@@ -1,0 +1,3 @@
+deviceIdentifier	deviceName
+766e25c19b894b92e160c199edb6481a3b63bb19	Charlie Kubal iPhone 3G
+b7e8bc9938e2ce946982cb8cbb04fa2785379019	Charlie Kubal iPhone 4S

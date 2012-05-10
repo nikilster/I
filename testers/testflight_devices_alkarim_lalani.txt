@@ -1,0 +1,2 @@
+deviceIdentifier	deviceName
+e58d7325d6ecfe5dbcd66e8515ecdf832d12a8f7	Alkarim Lalani iPhone 4
