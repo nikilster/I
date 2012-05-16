@@ -131,6 +131,8 @@
     </style>
     <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
+    <link href="css/authentication.css" rel="stylesheet"/>
+
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -163,6 +165,9 @@
     </div>
 
     <div class="container">
+
+    	<!-- Promo Image -->
+    	<img id="mainImage" src="img/home.png" alt="Product Screenshots"/>
 
 		<div class="row">
 		
