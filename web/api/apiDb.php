@@ -1,8 +1,11 @@
 <?php
 	
-	include_once('../classes/db.php');
+	//This is inside web/api/apiDb.php
+	//http://stackoverflow.com/questions/7378814/are-php-include-paths-relative-to-the-file-or-the-calling-code
+	//http://stackoverflow.com/questions/2184810/difference-between-getcwd-and-dirname-file-which-should-i-use
+	include_once(dirname(__FILE__).'/../../classes/db.php');
 	//for the date format
-	include_once('../util/util.php');
+	include_once(dirname(__FILE__).'/../../util/util.php');
 	
 	//Wrapper methods for the db for the web api
 	class APIDb
