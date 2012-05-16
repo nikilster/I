@@ -16,21 +16,21 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link href="../css/main.css" rel="stylesheet" type="text/css"/>
+	<link href="css/main.css" rel="stylesheet" type="text/css"/>
 	
 	<!-- My Stuff see.php -->
-	<script type="text/javascript" src="../d3/d3.js"></script>
-	<script type="text/javascript" src="../d3/d3.layout.js"></script>
+	<script type="text/javascript" src="d3/d3.js"></script>
+	<script type="text/javascript" src="d3/d3.layout.js"></script>
 	<link href="css/see.css" rel="stylesheet" type="text/css"/>
-	<script type="text/javascript" src="../js/event.js" ></script>
-	<script type="text/javascript" src="../js/graph.js" ></script>
-	<script type="text/javascript" src="../js/pie-chart-d3.js" ></script>
+	<script type="text/javascript" src="js/event.js" ></script>
+	<script type="text/javascript" src="js/graph.js" ></script>
+	<script type="text/javascript" src="js/pie-chart-d3.js" ></script>
 	
 	<!-- My Stuff index.php -->
-	<script type="text/javascript" src="../js/main.js" ></script>
-	<script type="text/javascript" src="../js/event.js" ></script>
-	<script type="text/javascript" src="../js/time.js" ></script>
-	<script type="text/javascript" src="../js/activity.js" ></script>
+	<script type="text/javascript" src="js/main.js" ></script>
+	<script type="text/javascript" src="js/event.js" ></script>
+	<script type="text/javascript" src="js/time.js" ></script>
+	<script type="text/javascript" src="js/activity.js" ></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
 	
 	
@@ -96,13 +96,13 @@
 	</script>
 	
     <!-- Le styles -->
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -132,7 +132,7 @@
 		      <li><a href="board.php">Life</a></li>
               <li class="active"><a href="index.php">Home</a></li>
 			  <li> <a href="stats.php">Friends</a></li>
-              <li><a href="../auth/logout.php">Logout</a></li>
+              <li><a href="auth/logout.php">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -222,13 +222,13 @@
 	</div> <!-- /container -->
 	
 	<!-- Javascript - Placed at the end of the document so pages load faster! -->
-	<script src="../bootstrap/js/bootstrap-button.js"></script>
-	<script src="../bootstrap/js/bootstrap-collapse.js"></script>
+	<script src="bootstrap/js/bootstrap-button.js"></script>
+	<script src="bootstrap/js/bootstrap-collapse.js"></script>
 
 	
 	<!-- Highcharts -->
-	<script src="../Highcharts-2.2.0/js/highcharts.js" type="text/javascript"></script>
-	<script type="text/javascript" src="../js/bar-chart-hc.js" ></script>
+	<script src="Highcharts-2.2.0/js/highcharts.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/bar-chart-hc.js" ></script>
 
   </body>
 </html>

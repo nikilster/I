@@ -8,6 +8,6 @@
 	//4th Argument is the gPath parameter - set this so that it works outside of this folder
 	setcookie("id",'', 1, "/");
 	
-	header("Location: ../web/authenticate.php");
+	header("Location: ../authenticate.php");
 	
 ?>

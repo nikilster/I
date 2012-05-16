@@ -1,6 +1,6 @@
 <?php
 	
-	include_once('../auth/login.php');
+	include_once('auth/login.php');
 	$id = checkLogin();
 
 ?>
@@ -13,18 +13,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-	<link href="../css/stats.css" rel="stylesheet">
+	<link href="css/stats.css" rel="stylesheet">
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
 	
     <!-- Le styles -->
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -54,7 +54,7 @@
 			  <li><a href="board.php">Life</a></li>
               <li><a href="index.php">Home</a></li>
 			  <li class="active"><a href=".">Friends</a></li>
-              <li><a href="../auth/logout.php">Logout</a></li>
+              <li><a href="auth/logout.php">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

@@ -1,6 +1,6 @@
 <?php
 	
-	include_once('../auth/login.php');
+	include_once('auth/login.php');
 	$id = checkLogin();
 
 	

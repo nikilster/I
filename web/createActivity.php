@@ -13,7 +13,7 @@
 	$activityName = $_POST["name"];
 	$goalDuration = $_POST["goal"];
 	
-	include_once('../auth/login.php');
+	include_once('auth/login.php');
 	$userId = checkLogin();
 	
 	include_once('../classes/db.php');

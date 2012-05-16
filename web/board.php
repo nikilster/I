@@ -10,22 +10,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-	<link type="text/css" rel="stylesheet" href="../css/board.css"/>
-	<link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="css/board.css"/>
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 	<style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-	<link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 		
 </head>
 <body>
 
-	<script type="text/javascript" src="../js/activity.js" ></script>
-	<script type="text/javascript" src="../js/life.js" ></script>
+	<script type="text/javascript" src="js/activity.js" ></script>
+	<script type="text/javascript" src="js/life.js" ></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
-	<script src="../Highcharts-2.2.0/js/highcharts.js" type="text/javascript"></script>
+	<script src="Highcharts-2.2.0/js/highcharts.js" type="text/javascript"></script>
 
 	<script>
 			<?php 
@@ -82,7 +82,7 @@
 			  <li class="active"><a href="board.php">Life</a></li>
               <li><a href="index.php">Home</a></li>
 			  <li> <a href="stats.php">Friends</a></li>
-              <li><a href="../auth/logout.php">Logout</a></li>
+              <li><a href="auth/logout.php">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

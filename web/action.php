@@ -9,7 +9,7 @@
 	if(!($type == "start" || $type == "finish")) return;
 	if(!array_key_exists("id", $_GET))return;
 
-	include_once('../auth/login.php');
+	include_once('auth/login.php');
 	$userId = checkLogin();
 	
 	include_once('../classes/db.php');
