@@ -1,2 +1,2 @@
-ALTER TABLE  `users` ADD  `push_token` VARCHAR( 100 ) NULL DEFAULT NULL
-ALTER TABLE  `users` ADD  `push_token_date` DATETIME NULL DEFAULT NULL
+ALTER TABLE  `users` ADD  `push_token` VARCHAR( 100 ) NULL DEFAULT NULL;
+ALTER TABLE  `users` ADD  `push_token_date` DATETIME NULL DEFAULT NULL;
