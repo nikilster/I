@@ -93,5 +93,24 @@
 		response($result);
 	}
 			
-		
+	/*
+		Set Push Token
+
+		Sets the push token for the current user (iPhone)
+	*/
+	function setPushToken($userId)
+	{
+		//Check Parameter
+		if(!parameterExists(APIKeys::$PUSH_TOKEN))
+			displayError("Set Push Token: Please supply a push token as part of the request");
+
+		//Get the Push Token
+		$pushToken = getParameter(APIKeys::$PUSH_TOKEN);
+
+		//Set Token
+		$result = APIDb::setPushToken($userId, $pushToken);
+
+		//Display Response
+		response($result);
+	}
 ?>

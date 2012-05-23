@@ -36,7 +36,7 @@
 	{
 		$anonmymousDB = new self(0);
 		
-		$id = $anonmymousDB->cleanForDB($userId);
+		$id = $anonmymousDB->cleanForDb($userId);
 		$query = "SELECT count(*) AS count FROM users WHERE id = $id";
 		$result = $anonmymousDB->query($query);
 		
@@ -471,6 +471,40 @@
 		
 		return -1;
 	}
+
+	/*
+		Set Push Token
+
+		Sets the iphone push token and the current date
+	*/
+
+	public function setPushToken($pushToken)
+	{
+		//Get the user id
+		$userId = $this->userId;
+
+		//Clean
+		$pushToken = $this->cleanForDb($pushToken);
+
+		//Make sure this is a valid push token
+		$PUSH_TOKEN_LENGTH = 64;
+		if(strlen($pushToken) < $PUSH_TOKEN_LENGTH)
+			return false;
+
+		//Make Queries
+		$addPushTokenQuery = "UPDATE users SET push_token = '$pushToken' WHERE id = $userId;";
+		$updatePushTokenDateQuery = "UPDATE users SET push_token_date = NOW() where id = $userId;";
+
+		//Run Queries
+		$addPushTokenResult = $this->query($addPushTokenQuery);
+		$updatePushTokenDateResult = $this->query($updatePushTokenDateQuery);
+
+		//Return pushTokenResult
+		return $addPushTokenResult;
+
+	}
+
+
 	/*
 		Choose a user and randomly generate test data for that user for the past week
 	*/

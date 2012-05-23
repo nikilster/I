@@ -91,6 +91,19 @@
 			
 			return $db->finishCurrentEvent($eventId);
 		}
+
+		//Sets the push token (and current date)
+		public static function setPushToken($userId, $pushToken)
+		{
+			//Construct a new db
+			$db = new Db($userId);
+
+			//Set the push token
+			return $db->setPushToken($pushToken);
+			//*** Negative numbers (-1)  is true in PHP!!!  If(-1) == true
+
+			
+		}
 	}
 	
 	

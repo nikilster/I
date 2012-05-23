@@ -52,6 +52,9 @@
 		else if($function == APIKeys::$FUNCTION_STOP_EVENT)
 			stopEvent($userId);
 			
+		else if($function == APIKeys::$FUNCTION_SET_PUSH_TOKEN)
+			setPushToken($userId);
+
 		//Should never get here
 		else
 			error();
@@ -101,7 +104,8 @@
 		if(!($function === APIKeys::$FUNCTION_LOGIN ||
 			 $function === APIKeys::$FUNCTION_GET_INFORMATION ||
 			 $function === APIKeys::$FUNCTION_START_ACTIVITY ||
-			 $function === APIKeys::$FUNCTION_STOP_EVENT))
+			 $function === APIKeys::$FUNCTION_STOP_EVENT ||
+			 $function === APIKeys::$FUNCTION_SET_PUSH_TOKEN))
 			displayError("Please specify a valid function");
 
 		//TODO: Any more validation
