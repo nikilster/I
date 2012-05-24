@@ -1,23 +1,23 @@
 <?php
 
 // Put your device token here (without spaces):
-$deviceToken = 'ed4b545a70658bc7cf4e210d93bd7b5a9579918ee8d3525262176945afdd879d';
+$deviceToken = 'a01ac56696310c505692a6124d0c9642654666ee179d2d0a9ac227e85b98b515';
 
 // Put your private key's passphrase here:
 $passphrase = 'tara';
 
 // Put your alert message here:
-$message = "It's Alive!";
+$message = "It's for reals Alive!!";
 
 ////////////////////////////////////////////////////////////////////////////////
 
 $ctx = stream_context_create();
-stream_context_set_option($ctx, 'ssl', 'local_cert', 'Nikil Life Capitalized.pem');
+stream_context_set_option($ctx, 'ssl', 'local_cert', 'Nikil Life Production.pem');
 stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
 $fp = stream_socket_client(
-	'ssl://gateway.sandbox.push.apple.com:2195', $err,
+	'ssl://gateway.push.apple.com:2195', $err,
 	$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
 if (!$fp)
