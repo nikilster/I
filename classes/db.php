@@ -7,7 +7,8 @@
  include_once(dirname(__FILE__)."/error.php");
  include_once(dirname(__FILE__)."/activity.php");
  include_once(dirname(__FILE__)."/../util/util.php");
- 
+ include_once(dirname(__FILE__)."/user.php");
+
  //Set default timezone
  date_default_timezone_set('America/Los_Angeles');
  
@@ -16,7 +17,7 @@
  
 	//Warning: if () 
 	function __construct($id)
-	{
+	{		
 		//Set up the database
 		//Global configuration of the database settings
 		global $dbHostname, $dbUsername, $dbPassword, $dbName;
@@ -554,6 +555,26 @@
 			}
 			
 		}
+	}
+
+	/*
+		For the Notifications!
+	*/
+	public static function getUsersWithMobileDevices()
+	{
+		//Query
+		$selectUsersWithMobileQuery = "SELECT id, first_name, last_name, push_token FROM users WHERE push_token IS NOT NULL";
+		$anonmymousDB = new self(0);
+		$result = $anonmymousDB->query($selectUsersWithMobileQuery);
+
+		//Create Array
+		$users = array();
+		while($row = mysql_fetch_assoc($result))
+			array_push($users, new User($row));
+
+		//Return
+		return $users;
+
 	}
  }		
  
