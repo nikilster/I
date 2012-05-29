@@ -393,7 +393,7 @@
 			array_push($compiledActivities, $activityInfo);
 		}
 		
-		//Return the values (the array (('id'=>'1',, 'name'=>'exercise', 'goal'=>3600 duration'=>600), ...))
+		//Return the values (the array (('id'=>'1',, 'name'=>'exercise', 'goal'=>3600 'duration'=>600), ...))
 		return $compiledActivities;
 		
 	}
@@ -576,6 +576,35 @@
 		return $users;
 
 	}
+
+	/*
+		For Notifications
+	*/
+		public static function getRandomUnstartedActivityForUser($userId)
+		{
+
+			//We know this is clean
+			$db = new self($userId);
+
+			//Current date (Now in Mysql datetime format)
+			$now = date("Y-m-d H:i:s");
+			$activities = $db->getData($now);
+
+			//Get the activities that are 0
+			$unstartedActivities = array();
+			foreach($activities as $a)
+				if($a['duration'] == 0) 
+					array_push($unstartedActivities, $a);
+
+
+			//TODO: if all of the activities are started - suggest important
+			//Choose an activity at random
+			$numActivities = count($unstartedActivities);
+			if($numActivities > 0)
+				return $unstartedActivities[rand(0,$numActivities-1)];
+			else
+				return null;
+		}
  }		
  
 ?>
