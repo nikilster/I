@@ -24,18 +24,40 @@ foreach($users as $user)
 
 	//If the user has not finished all of their activities for today
 	if($activity)
-	{
-		//TODO: add more messages!
 		//Suggest they start it
-		$message = "Hey! Want to " . $activity[name] . " today?";
-		motivateUser($message, $user->pushToken);
-	}		
-		 
+		motivateUser($user, $activity);
+ 
 }
 
-function motivateUser($message, $pushToken)
+function motivateUser($user, $activity)
 {
-	sendPush($message, $pushToken);
-	echo "sent message: $message to $pushToken";
+
+	//TODO: add more messages!
+	$message = getMessage($user, $activity);	
+
+	//Send Push
+	sendPush($message, $user->pushToken);
+
+	//Log
+	logMotivation($user, $activity, $message);
 }
+
+function getMessage($user, $activity)
+{
+	$message = 'Hey '. $user->firstName .'! Want to ' . $activity[name] . ' today?';
+	return $message;
+}
+
+function logMotivation($user, $activity, $message)
+{
+	//User id, Time, Activity Id, First Name, Last Name
+	//Duration, Goal, Percentage, Activity Name, Message
+	$now = date("Y-m-d H:i:s");
+	DB::logMotivation($user->id, $now, $activity['id'],
+						$user->firstName, $user->lastName,
+						$activity['duration'], $activity['goal'], $activity['percentage'],
+						$activity['name'], $message);
+
+}
+
 ?>

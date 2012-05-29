@@ -605,6 +605,27 @@
 			else
 				return null;
 		}
+
+	/*
+		Log Notification
+	*/
+		//User id, Time, Activity Id, First Name, Last Name
+		//Duration, Goal, Percentage, Activity Name, Message
+		public static function logMotivation($userId, $time, $activityId,
+												$firstName, $lastName, $duration,
+												$goal, $percentage, $activityName, $message)
+		{
+			//Anonymous db
+			$db = new self(0);
+
+			$logQuery = 'INSERT INTO motivation ';
+			$logQuery .= ' (user_id, time, activity_id, first_name, last_name, duration, goal, percentage, activity_name, message) ';
+			$logQuery .= ' VALUES ';
+			$logQuery .= " ($userId, '$time', $activityId, '$firstName', '$lastName', $duration, $goal, $percentage, '$activityName', '$message');";
+
+			return $db->query($logQuery);
+
+		}
  }		
  
 ?>
