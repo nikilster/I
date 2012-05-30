@@ -7,8 +7,8 @@
 */
 
 //Include the db
-include_once('../../classes/db.php');
-include_once('pushNotification.php');
+include_once(dirname(__FILE__).'../../classes/db.php');
+include_once(dirname(__FILE__).'pushNotification.php');
 
 //Get list of people
 $users = DB::getUsersWithMobileDevices();
@@ -45,6 +45,8 @@ function motivateUser($user, $activity)
 function getMessage($user, $activity)
 {
 	$message = 'Hey '. $user->firstName .'! Want to ' . $activity[name] . ' today?';
+	
+
 	return $message;
 }
 
