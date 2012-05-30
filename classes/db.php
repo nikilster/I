@@ -618,6 +618,7 @@
 			//Anonymous db
 			$db = new self(0);
 
+			$message = $db->cleanForDb($message);
 			$logQuery = 'INSERT INTO motivation ';
 			$logQuery .= ' (user_id, time, activity_id, first_name, last_name, duration, goal, percentage, activity_name, message) ';
 			$logQuery .= ' VALUES ';

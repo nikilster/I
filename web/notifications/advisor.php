@@ -44,10 +44,20 @@ function motivateUser($user, $activity)
 
 function getMessage($user, $activity)
 {
-	$message = 'Hey '. $user->firstName .'! Want to ' . $activity['name'] . ' today?';
-	
+	$name = $user->firstName;
+	$activity = $activity['name'];
 
-	return $message;
+	$m1 = "Hey $name! Want to $activity today?";
+	$m2 = "Hey $name!  Is it time to $activity!?";
+	$m3 = "Yo $name!  Maybe some $activity now?";
+	$m4 = "Hey buddy!  Let's get some $activity on!";
+
+	$messages = array($m1, $m2, $m3, $m4);
+
+	//Return random message
+	$randomMessage = $messages[rand(0,count($messages)-1)];
+
+	return $randomMessage;
 }
 
 function logMotivation($user, $activity, $message)
