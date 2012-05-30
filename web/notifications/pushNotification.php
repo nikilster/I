@@ -22,10 +22,12 @@ function sendPush($message, $deviceToken)
 	else
 		$gateway = 'ssl://gateway.sandbox.push.apple.com:2195';
 
+	$pem = dirname(__FILE__).'/Nikil Life Production.pem';
+
 	////////////////////////////////////////////////////////////////////////////////
 
 	$ctx = stream_context_create();
-	stream_context_set_option($ctx, 'ssl', 'local_cert', 'Nikil Life Production.pem');
+	stream_context_set_option($ctx, 'ssl', 'local_cert', $pem);
 	stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 	// Open a connection to the APNS server
