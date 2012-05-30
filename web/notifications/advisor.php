@@ -7,8 +7,8 @@
 */
 
 //Include the db
-include_once(dirname(__FILE__).'../../classes/db.php');
-include_once(dirname(__FILE__).'pushNotification.php');
+include_once(dirname(__FILE__).'/../../classes/db.php');
+include_once(dirname(__FILE__).'/pushNotification.php');
 
 //Get list of people
 $users = DB::getUsersWithMobileDevices();
