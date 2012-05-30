@@ -44,7 +44,7 @@ function motivateUser($user, $activity)
 
 function getMessage($user, $activity)
 {
-	$message = 'Hey '. $user->firstName .'! Want to ' . $activity[name] . ' today?';
+	$message = 'Hey '. $user->firstName .'! Want to ' . $activity['name'] . ' today?';
 	
 
 	return $message;
