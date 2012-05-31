@@ -166,13 +166,14 @@
 
     <div class="container">
 
-    	<!-- Promo Image -->
-    	<img id="mainImage" src="img/home.png" alt="Product Screenshots"/>
-
+		<div id="title">
+			<!-- Promo Image -->
+			<img src="img/title.png" alt="Title"/>
+		</div>
 		<div class="row">
 		
 			<!-- Sign Up Form-->
-			<div class="span4">
+			<div class="span2 offset1">
 				<form name="create" action="" method="POST">
 					<fieldset>
 						
@@ -204,38 +205,43 @@
 								<button type="submit" name="signup-submit" class="btn btn-primary">Sign in</button>
 							</div>
 						</div>
+					</fieldset>
 				</form>		
-			</div>
 			
 			<!-- Login Form-->
-			<div class="span4">
 			
-			<form name="login" action="" method="POST">
-				<fieldset>
-					
-					<legend>Sign in</legend>
-					
-					<?php 
-						if(isset($loginErrorMessage)) 
-							echo "<div class=''>$loginErrorMessage</div>";
-					?>
-					
-					<div class="control-group">
-						<div class="controls">
-							<input class="input-medium" type="text" placeholder="Email" name="email"/>
+				<form name="login" action="" method="POST">
+					<fieldset>
+						
+						<legend>Sign in</legend>
+						
+						<?php 
+							if(isset($loginErrorMessage)) 
+								echo "<div class=''>$loginErrorMessage</div>";
+						?>
+						
+						<div class="control-group">
+							<div class="controls">
+								<input class="input-medium" type="text" placeholder="Email" name="email"/>
+							</div>
+						
+							<div class="controls">
+								<input class="input-medium" type="password" placeholder="Password" name="password"/>
+							</div>
 						</div>
-					
-						<div class="controls">
-							<input class="input-medium" type="password" placeholder="Password" name="password"/>
+						
+						<div class="control-group">
+							<div >
+								<button type="submit" name="login-submit" class="btn btn-success">Sign in</button>
+							</div>
 						</div>
-					</div>
-					
-					<div class="control-group">
-						<div >
-							<button type="submit" name="login-submit" class="btn btn-success">Sign in</button>
-						</div>
-					</div>
-			</form>
+					</fieldset>
+				</form>
+			</div>
+		
+			<!-- Screenshots -->
+			<div class="span6 offset1">
+				<img id="screenshots" src="img/screenshots.png" alt="screenshots"/>
 			</div>
 		</div> <!-- /Row -->
 	</div> <!-- /Container -->
