@@ -10,10 +10,10 @@
 	if(!array_key_exists("id", $_GET))return;
 
 	include_once('auth/login.php');
-	$userId = checkLogin();
+	list($userId, $timezone) = checkLogin();
 	
 	include_once('../classes/db.php');
-	$db = new Db($userId);
+	$db = new Db($userId, $timezone);
 	$eventId = intval($_GET["id"]);
 
 	if($type == "start")	

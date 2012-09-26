@@ -1,4 +1,5 @@
 <?php
+//TODO------ Handle the Timezones - show the messages at good times :)
 
 /*
 	Advisor

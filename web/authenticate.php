@@ -1,4 +1,5 @@
 <?php
+
 	session_start();
 	
 	if(array_key_exists("id",$_SESSION)) 
@@ -7,7 +8,7 @@
 		
 	if($_POST)
 	{
-		
+
 		if(array_key_exists('signup-submit',$_POST)) 
 		{
 			include_once('../classes/db.php');
@@ -31,6 +32,8 @@
 		$password = trim($_POST["password"]);
 		$confirmPassword = trim($_POST["confirmPassword"]);
 		
+		$timezone = trim($_POST["timezone"]);
+		
 		//Missing input
 		if(!($email && $password && $confirmPassword) || count($parts) < 2 || count($parts) > 3 || $password != $confirmPassword)
 		{
@@ -43,14 +46,14 @@
 			$lastName = $parts[1];
 			
 			$fakeUserId = -1;
-			$db = new Db($fakeUserId);
+			$db = new Db($fakeUserId, $timezone);
 			
 			//Try to log in or create the account
 			$result = $db->createUser($firstName, $lastName, $email, $password);
 			
 			if($result["result"] == 1)
 			{
-				handleSuccessfulAuthentication($result["id"]);
+				handleSuccessfulAuthentication($result["id"], $timezone);
 			}
 			//Else
 			else
@@ -64,6 +67,8 @@
 		$email = trim($_POST["email"]);
 		$password = trim($_POST["password"]);
 		
+		$timezone = trim($_POST["timezone"]);
+		
 		//missing input
 		if(!($email && $password))
 		{
@@ -73,13 +78,13 @@
 		else
 		{
 			$fakeUserId = -1;
-			$db = new Db($fakeUserId);
+			$db = new Db($fakeUserId, $timezone);
 			
 			//Try to log in 
 			$result = $db->authenticate($email, $password);
 			
 			if($result["result"] == 1)
-				handleSuccessfulAuthentication($result["id"]);
+				handleSuccessfulAuthentication($result["id"], $timezone);
 				
 			else
 			//Error message		
@@ -88,18 +93,20 @@
 		
 	}	
 	
-	function handleSuccessfulAuthentication($id)
+	function handleSuccessfulAuthentication($id, $timezone)
 	{
 		//Session
 		$_SESSION["id"] = $id;
-
+		$_SESSION['timezone'] = $timezone;
+		
 		//Cookie
 		//Unix time maxmium 2038
 		$TWENTY_YEARS_IN_SECONDS = 60*60*24*365*20;
 		$cookieExpiration = time() + $TWENTY_YEARS_IN_SECONDS;
 		//Path Parameter
 		setcookie("id", $id, $cookieExpiration, "/");
-		
+		setcookie("timezone", $timezone, $cookieExpiration, "/");
+
 		//redirect;
 		redirect();
 	}
@@ -143,6 +150,7 @@
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  
   </head>
 
   <body>
@@ -197,7 +205,11 @@
 						
 							<div class="controls">
 								<input class="input-medium" type="password" placeholder="Confirm" name="confirmPassword"/>
-							</div>					
+							</div>
+
+							<div class="controls">
+								<input type="hidden" name="timezone">
+							</div>
 						</div>
 						
 						<div class="control-group">
@@ -228,6 +240,10 @@
 							<div class="controls">
 								<input class="input-medium" type="password" placeholder="Password" name="password"/>
 							</div>
+							
+							<div class="controls">
+								<input type="hidden" name="timezone">
+							</div>
 						</div>
 						
 						<div class="control-group">
@@ -245,5 +261,16 @@
 			</div>
 		</div> <!-- /Row -->
 	</div> <!-- /Container -->
+	
+	<script type="text/javascript">
+         //Get the user's timezone
+		 var timezone = -new Date().getTimezoneOffset()/60;
+		 //Format according to the mysql requirment nicely
+		 if(timezone >= 0) timezone = "+"+timezone;
+		 timezone = timezone + ":00";
+		 //Set the fields in the form (or we could use document.create.timezone.value)
+		 document.forms["create"].timezone.value = timezone;
+		 document.forms["login"].timezone.value = timezone;
+	</script>
   </body>
 </html>

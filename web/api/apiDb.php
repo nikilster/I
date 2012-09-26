@@ -11,21 +11,21 @@
 	class APIDb
 	{
 	
-		public static function userIdForAuthToken($authToken)
+		public static function userIdForAuthToken($authToken, $timezone)
 		{
 			$fakeUserId = -1;
-			$db = new Db($fakeUserId);
+			$db = new Db($fakeUserId, $timezone);
 			
 			return $db->userIdForAuthToken($authToken);
 		}
 		
 		
 		//This is static so we can call it without being already authenticated
-		public static function login($email, $password)
+		public static function login($email, $password, $timezone)
 		{
 			//Invalid user id - just to init the db
 			$fakeUserId = -1;
-			$db = new Db($fakeUserId);
+			$db = new Db($fakeUserId, $timezone);
 			
 			//Try to log in
 			$result = $db->authenticate($email, $password);
@@ -49,10 +49,10 @@
 		}
 
 		//Return the main user components of the page
-		public static function getInformation($userId)
+		public static function getInformation($userId, $timezone)
 		{
 			//Construct a new db
-			$db = new Db($userId);	
+			$db = new Db($userId, $timezone);	
 			
 			$activities = $db->getActivities();
 			$currentEvent = $db->getCurrentRunningEvent();
@@ -64,39 +64,39 @@
 		}
 		
 		//Return the status of start activity
-		public static function startActivity($userId, $activityId)
+		public static function startActivity($userId, $activityId, $timezone)
 		{
 			//Construct a new db
-			$db = new Db($userId);
+			$db = new Db($userId, $timezone);
 			
 			//Start the activity and return the json response
 			return $db->startEvent($activityId);
 		}
 		
 		//Returns the current running event
-		public static function getCurrentRunningEvent($userId)
+		public static function getCurrentRunningEvent($userId, $timezone)
 		{
 			//Construct a new db
-			$db = new Db($userId);
+			$db = new Db($userId, $timezone);
 			
 			//Get the current Running Events
 			return $currentEvent = $db->getCurrentRunningEvent();	
 		}
 		
 		//Stop the event
-		public static function stopEvent($userId, $eventId)
+		public static function stopEvent($userId, $eventId, $timezone)
 		{
 			//Construct a new db
-			$db = new Db($userId);
+			$db = new Db($userId, $timezone);
 			
 			return $db->finishCurrentEvent($eventId);
 		}
 
 		//Sets the push token (and current date)
-		public static function setPushToken($userId, $pushToken)
+		public static function setPushToken($userId, $pushToken, $timezone)
 		{
 			//Construct a new db
-			$db = new Db($userId);
+			$db = new Db($userId, $timezone);
 
 			//Set the push token
 			return $db->setPushToken($pushToken);

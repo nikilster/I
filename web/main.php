@@ -1,8 +1,9 @@
 <?php
 	
 	include_once('auth/login.php');
-	$id = checkLogin();
-
+	//List: http://us2.php.net/list
+	list($id, $timezone) = checkLogin();
+	
 	
 	include_once('../util/users.php');
 	include_once('../classes/db.php');
@@ -24,7 +25,7 @@
 	//Swim @4:35pm 4min
 	//Eat @3:32 12 min
 	//Get the current running event
-	$db = new Db($userToShow);	
+	$db = new Db($userToShow, $timezone);	
 	$activities = $db->getActivities();
 	
 	//If the user needs to create activities - take them to the create activities page

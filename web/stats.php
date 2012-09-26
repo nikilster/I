@@ -1,7 +1,7 @@
 <?php
 	
 	include_once('auth/login.php');
-	$id = checkLogin();
+	list($id, $timezone) = checkLogin();
 
 ?>
 <!DOCTYPE html>
@@ -75,7 +75,7 @@
 		//Show the time spent and the users
 		include_once('../classes/db.php');
 		include_once('../util/time.php');
-		$db = new Db($id);
+		$db = new Db($id, $timezone);
 		
 		$data = $db->getUsersAndTimes();
 		$counter = 0;

@@ -1,7 +1,7 @@
 <?php
 	
 	include_once('login.php');
-	$id = checkLogin();
+	list($id, $timezone) = checkLogin();
 
 ?>
 <!DOCTYPE html>
@@ -51,7 +51,7 @@
 			include_once('event.php');
 			
 			//Get the current running event
-			$db = new Db($id);
+			$db = new Db($id, $timezone);
 			$currentEvent = $db->getCurrentRunningEvent();
 			$activities = $db->getActivities();
 			$completed = $db->getCompletedEvents();

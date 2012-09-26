@@ -14,10 +14,10 @@
 	$goalDuration = $_POST["goal"];
 	
 	include_once('auth/login.php');
-	$userId = checkLogin();
+	list($userId, $timezone) = checkLogin();
 	
 	include_once('../classes/db.php');
-	$db = new Db($userId);
+	$db = new Db($userId, $timezone);
 
 	$result = $db->createActivity($activityName, $goalDuration);
 	$activities = $db->getActivities();

@@ -8,7 +8,7 @@
 		
 		Attempts to log the user in and gives the auth token
 	*/
-	function login()
+	function login($timezone)
 	{
 		//Checks
 		if(!parameterExists(APIKeys::$EMAIL) && !parameterExists(APIKeys::$PASSWORD))
@@ -26,7 +26,7 @@
 		
 		//TODO:any checking 
 		
-		$result = APIDb::login($email, $password);
+		$result = APIDb::login($email, $password, $timezone);
 		
 		//show response
 		response($result);
@@ -43,9 +43,9 @@
 		Activities, Event
 	*/
 	
-	function getInformation($userId)
+	function getInformation($userId, $timezone)
 	{
-		$result = APIDb::getInformation($userId);
+		$result = APIDb::getInformation($userId, $timezone);
 		response($result);
 	}
 		
@@ -57,16 +57,16 @@
 		Starts the specified activity. (Ends any previous running activity)		
 	*/
 
-	function startActivity($userId)
+	function startActivity($userId, $timezone)
 	{
 		//Checks
 		if(!parameterExists(APIKeys::$ACTIVITY_ID))
 			displayError("Start Event: Please supply a valid activity id as part of the request");
 		
 		$activityId = getParameter(APIKeys::$ACTIVITY_ID);
-		$startActivity = APIDb::startActivity($userId, $activityId);
+		$startActivity = APIDb::startActivity($userId, $activityId, $timezone);
 		
-		$currentEvent = APIDb::getCurrentRunningEvent($userId);
+		$currentEvent = APIDb::getCurrentRunningEvent($userId, $timezone);
 		
 		$result = array('result'=>$startActivity, 'currentRunningEvent'=>$currentEvent);
 		
@@ -80,14 +80,14 @@
 		
 		Stops the current activity.
 	*/
-	function stopEvent($userId)
+	function stopEvent($userId, $timezone)
 	{
 		//Check
 		if(!parameterExists(APIKeys::$EVENT_ID))
 			displayError("Stop Event: Please supply a valid event id as part of the request");
 			
 		$eventId = getParameter(APIKeys::$EVENT_ID);
-		$result = APIDb::stopEvent($userId, $eventId);
+		$result = APIDb::stopEvent($userId, $eventId, $timezone);
 		
 		//Display Response
 		response($result);
@@ -98,7 +98,7 @@
 
 		Sets the push token for the current user (iPhone)
 	*/
-	function setPushToken($userId)
+	function setPushToken($userId, $timezone)
 	{
 		//Check Parameter
 		if(!parameterExists(APIKeys::$PUSH_TOKEN))
@@ -108,7 +108,7 @@
 		$pushToken = getParameter(APIKeys::$PUSH_TOKEN);
 
 		//Set Token
-		$result = APIDb::setPushToken($userId, $pushToken);
+		$result = APIDb::setPushToken($userId, $pushToken, $timezone);
 
 		//Display Response
 		response($result);

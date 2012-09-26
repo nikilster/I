@@ -1,7 +1,7 @@
 <?php
 	
 	include_once('auth/login.php');
-	$id = checkLogin();
+	list($id, $timezone) = checkLogin();
 
 	
 	$errorInput = false;
@@ -26,7 +26,7 @@
 		{
 		
 			include_once('../classes/db.php');
-			$db = new Db($id);	
+			$db = new Db($id, $timezone);	
 			$result1 = $db->createActivity($activityName1, $goalDuration1);
 			$result2 = $db->createActivity($activityName2, $goalDuration2);
 			$result3 = $db->createActivity($activityName3, $goalDuration3);

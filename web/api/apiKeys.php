@@ -5,6 +5,7 @@
 	{
 		
 		//POST keys
+		public static $TIMEZONE = "timezone";
 		public static $POST_FUNCTION = "f";
 		public static $AUTH_TOKEN = "authToken";
 		public static $EMAIL = "email";

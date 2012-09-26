@@ -16,7 +16,7 @@
  {
  
 	//Warning: if () 
-	function __construct($id)
+	function __construct($id, $timezone = "")
 	{		
 		//Set up the database
 		//Global configuration of the database settings
@@ -30,6 +30,9 @@
 		
 		//Set userId
 		$this->userId = intval($id);
+		
+		//Set the Timezone
+		$this->setTimezone($timezone);
 	}
 	
 	//Checks to see if this is a valid user id
@@ -54,6 +57,17 @@
 		//1
 		if($count == 1) return true;
 		else return false;
+	}
+	
+	/*
+		Cleans and sets timezone!
+	*/
+	private function setTimezone($timezone)
+	{
+		//If the user didn't pass in a timezone to the create function
+		if($timezone == "") return;		
+		$timezone = $this->cleanForDb($timezone);
+		$this->query("SET time_zone='$timezone'");
 	}
 	
 	private function query($query)

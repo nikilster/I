@@ -2,7 +2,7 @@
 	
 	//Check the login
 	include('login.php');
-	$id = checkLogin();
+	list($id, $timezone) = checkLogin();
 	
 ?>
 <!DOCTYPE html>
@@ -78,7 +78,7 @@
 		include('db.php');
 		
 		//Create the database with the id
-		$db = new Db($id);
+		$db = new Db($id, $timezone);
 		
 		//Get the data
 		echo "var data = " . json_encode($db->getData()) . ";";

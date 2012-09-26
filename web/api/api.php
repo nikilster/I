@@ -14,12 +14,12 @@
 	//Include
 	include_once("apiDb.php");	
 	
-	//Authenticate
-	$userId = checkAuthentication();
+	
 	
 	//Make sure the request is in a valid format
 	validate();
-	
+	//Authenticate
+	$userId = checkAuthentication();
 	//Process the request (ie. run the function)
 	processTheRequest($userId);
 
@@ -35,25 +35,26 @@
 	function processTheRequest($userId)
 	{		
 		$function = getIntendedFunction();
-		
+		$timezone = getParameter(APIKeys::$TIMEZONE);
+
 		//Login
 		if($function == APIKeys::$FUNCTION_LOGIN)
-			login();
+			login($timezone);
 	
 		//Get Information
 		else if($function == APIKeys::$FUNCTION_GET_INFORMATION)
-			getInformation($userId);
+			getInformation($userId, $timezone);
 		
 		//Start Activity
 		else if($function == APIKeys::$FUNCTION_START_ACTIVITY)
-			startActivity($userId);
+			startActivity($userId, $timezone);
 		
 		//Stop Activity
 		else if($function == APIKeys::$FUNCTION_STOP_EVENT)
-			stopEvent($userId);
+			stopEvent($userId, $timezone);
 			
 		else if($function == APIKeys::$FUNCTION_SET_PUSH_TOKEN)
-			setPushToken($userId);
+			setPushToken($userId, $timezone);
 
 		//Should never get here
 		else
@@ -69,18 +70,24 @@
 	*/
 	function checkAuthentication()
 	{
-		
-		//First check if it is a login
+		//Display error exits the script (so no need to return)
+
+		//If this is a login call we can skip the authentication check
+		//This is the only function that gets that priviledge 
 		if(getIntendedFunction() == APIKeys::$FUNCTION_LOGIN)
 			return 0;
-		
+
+		//Make sure they sent an auth token
+		if(!parameterExists(APIKeys::$AUTH_TOKEN))
+			displayError("Need auth token");
+
 		//Check the POST['AUTH_TOKEN']
-		$userId = APIDb::userIdForAuthToken(getParameter(APIKEYS::$AUTH_TOKEN));
+		$userId = APIDb::userIdForAuthToken(getParameter(APIKEYS::$AUTH_TOKEN), getParameter(APIKeys::$TIMEZONE));
 		
+		//If bad return an error response and exit
 		if($userId < 1)
-			//If bad return an error response and exit
-			displayError("Invalid Auth Token");
-			
+			displayError("Invalid Auth Token");		
+
 		//If good, do nothing and continue	
 		
 		return $userId;
@@ -108,10 +115,42 @@
 			 $function === APIKeys::$FUNCTION_SET_PUSH_TOKEN))
 			displayError("Please specify a valid function");
 
+		//TODO: validate timezone
+		validateTimezone();
+
 		//TODO: Any more validation
 	}
+
+	/*
+		Validate Timezone
 	
-	
+		Make sure that it exists and also is appropriately formatted ("-7:00" or "+8:00")
+	*/
+	function validateTimezone()
+	{
+
+		//Make sure they submitted a timezone
+		if(!parameterExists(APIKeys::$TIMEZONE))
+			displayError("Please submit your timezone");
+
+		//Basic Timezone Validation
+		$timezone = getParameter(APIKeys::$TIMEZONE);	
+		
+		//Assume that timezone good
+		$valid = true;
+
+		//First character should be - or +
+		if( !($timezone[0] == "-" || $timezone[0] == "+")) $valid = false;
+
+		//Should have :
+		//Testing explicitly for false because index 0 == false in php
+		//Though this should never happen because the : should either be in position the 2 or 3
+		if( strpos(":") == false) $valid = false;
+
+		if(!$valid)
+			displayError("Please submit a valid timezone");
+	}
+
 	/*
 		Get Parameter
 		
