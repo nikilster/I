@@ -11,7 +11,7 @@
 		//Try Cookie
 		if(array_key_exists("id", $_COOKIE) && array_key_exists("timezone", $_COOKIE))
 		{
-			return intval($_COOKIE["id"], $_COOKIE["timezone"]);			
+			return array(intval($_COOKIE["id"]), $_COOKIE["timezone"]);			
 		}
 		
 		//No valid login information
