@@ -145,7 +145,7 @@
 		//Should have :
 		//Testing explicitly for false because index 0 == false in php
 		//Though this should never happen because the : should either be in position the 2 or 3
-		if( strpos(":") == false) $valid = false;
+		if( strpos($timezone,":") == false) $valid = false;
 
 		if(!$valid)
 			displayError("Please submit a valid timezone");
