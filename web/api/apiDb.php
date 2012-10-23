@@ -30,6 +30,16 @@
 			//Try to log in
 			$result = $db->authenticate($email, $password);
 			
+			//Return Result
+			return static::getResultOfAuthentication($result, $db);
+		}
+
+
+		/*
+			Used for both login and create account (create account logs in and returns the same data as the login :) 
+		*/
+		private static function getResultOfAuthentication($result, $db)
+		{
 			//TODO: switch this to ===
 			//API:: if we have a response == 1,  there ALWAYSwill always be a "data"
 			if($result["result"] == 1)
@@ -111,8 +121,11 @@
 			$fakeUserId = -1;
 			$db = new Db($fakeUserId, $timezone);
 
-			//Create the user account and return the result
-			return $db->createUser($firstName, $lastName, $email, $password);
+			//Create the user account
+			$result = $db->createUser($firstName, $lastName, $email, $password);
+
+			//Format result
+			return static::getResultOfAuthentication($result, $db);
 		}
 
 		//Create Activity

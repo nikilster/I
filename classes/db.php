@@ -289,7 +289,7 @@
 			return array("result"=>1, "id"=> $id);
 		}
 		else
-			return array("result"=>-1, "error"=> "email username or password");
+			return array("result"=>-1, "error"=> "Invalid email or password.");
 	}
 	
 	private function signUp($firstName, $lastName, $email, $password)
