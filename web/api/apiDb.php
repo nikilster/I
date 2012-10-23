@@ -104,6 +104,26 @@
 
 			
 		}
+
+		//Create user
+		public static function createAccount($firstName, $lastName, $email, $password, $timezone)
+		{
+			$fakeUserId = -1;
+			$db = new Db($fakeUserId, $timezone);
+
+			//Create the user account and return the result
+			return $db->createUser($firstName, $lastName, $email, $password);
+		}
+
+		//Create Activity
+		public static function createActivity($userId, $activityName, $activityDuration, $timezone)
+		{
+			//Create db
+			$db = new Db($userId, $timezone);
+
+			//Create Activity
+			return $db->createActivity($activityName, $activityDuration);
+		}
 	}
 	
 	

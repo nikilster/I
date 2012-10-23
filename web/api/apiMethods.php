@@ -113,4 +113,71 @@
 		//Display Response
 		response($result);
 	}
+
+	/*
+		Create Account
+
+		Let the user create an account from the phone so that they dont have to do a complicated
+		matching procedure when they want to use the website for analytics - may change this later 
+		to let the user use the mobile app without him/her having to create an account
+	*/
+	function createAccount($timezone)
+	{
+		//Checks
+		if(!parameterExists(APIKeys::$EMAIL) && !parameterExists(APIKeys::$PASSWORD))
+			displayError("Login: Please supply a valid email and password as part of the request");
+		
+		else if(!parameterExists(APIKeys::$EMAIL))
+			displayError("Login: Please supply an email as part of the request");
+		
+		else if(!parameterExists(APIKeys::$PASSWORD))
+			displayError("Login: Please suply a password as part of the request");
+		
+		if(!parameterExists(APIKeys::$USER_FIRST_NAME))
+			displayError("Create Account: Please supply the user's first name as part of the request");
+
+		if(!parameterExists(APIKeys::$USER_LAST_NAME))
+			displayError("Create Account: Please supply the user's last name as part of the request");
+
+
+		//Get the values
+		$email = getParameter(APIKeys::$EMAIL);
+		$password = getParameter(APIKeys::$PASSWORD);
+		$firstName = getParameter(APIKeys::$USER_FIRST_NAME);
+		$lastName = getParameter(APIKeys::$USER_LAST_NAME);
+
+		//TODO:any checking 
+		$result = APIDb::createAccount($firstName, $lastName, $email, $password, $timezone);
+		
+		//show response
+		response($result);
+	}
+
+
+	/*
+		Create Activity
+
+	*/
+		function createActivity($userId, $timezone)
+		{
+			//Check
+			if(!parameterExists(APIKeys::$ACTIVITY_NAME) && !parameterExists(APIKeys::$ACTIVITY_DURATION))
+				displayError("Create Activity: Please supply an activity name and activty duration as part of the request");
+
+			else if(!parameterExists(APIKeys::$ACTIVITY_NAME))
+				displayError("Create Activity: Please supply an activity name as part of the request");
+
+			else if(!parameterExists(APIKeys::$ACTIVITY_DURATION))
+				displayError("Create Activity: Please supply an activity duration as part of the request");
+
+			//Get values
+			$activityName = getParameter(APIKeys::$ACTIVITY_NAME);
+			$activityDuration = getParameter(APIKeys::$ACTIVITY_DURATION);
+
+			//Create activity
+			$result = APIDb::createActivity($userId, $activityName, $activityDuration, $timezone);
+
+			//Show Response
+			response($result);
+		}
 ?>

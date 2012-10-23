@@ -40,6 +40,10 @@
 		//Login
 		if($function == APIKeys::$FUNCTION_LOGIN)
 			login($timezone);
+
+		//Create Account
+		else if($function == APIKeys::$FUNCTION_CREATE_ACCOUNT)
+			createAccount($timezone);
 	
 		//Get Information
 		else if($function == APIKeys::$FUNCTION_GET_INFORMATION)
@@ -53,8 +57,13 @@
 		else if($function == APIKeys::$FUNCTION_STOP_EVENT)
 			stopEvent($userId, $timezone);
 			
+		//Set Push Token
 		else if($function == APIKeys::$FUNCTION_SET_PUSH_TOKEN)
 			setPushToken($userId, $timezone);
+
+		//Create Activity
+		else if($function == APIKeys::$FUNCTION_CREATE_ACTIVITY)
+			createActivity($userId, $timezone);
 
 		//Should never get here
 		else
@@ -72,9 +81,10 @@
 	{
 		//Display error exits the script (so no need to return)
 
-		//If this is a login call we can skip the authentication check
-		//This is the only function that gets that priviledge 
-		if(getIntendedFunction() == APIKeys::$FUNCTION_LOGIN)
+		//If this is a login or create user call we can skip the authentication check
+		//These are the only two functions that get this priviledge 
+		if(getIntendedFunction() == APIKeys::$FUNCTION_LOGIN ||
+			getIntendedFunction() == APIKeys::$FUNCTION_CREATE_ACCOUNT)
 			return 0;
 
 		//Make sure they sent an auth token
@@ -112,7 +122,9 @@
 			 $function === APIKeys::$FUNCTION_GET_INFORMATION ||
 			 $function === APIKeys::$FUNCTION_START_ACTIVITY ||
 			 $function === APIKeys::$FUNCTION_STOP_EVENT ||
-			 $function === APIKeys::$FUNCTION_SET_PUSH_TOKEN))
+			 $function === APIKeys::$FUNCTION_SET_PUSH_TOKEN ||
+			 $function === APIKeys::$FUNCTION_CREATE_ACCOUNT ||
+			 $function === APIKeys::$FUNCTION_CREATE_ACTIVITY))
 			displayError("Please specify a valid function");
 
 		//TODO: validate timezone
@@ -140,7 +152,7 @@
 		$valid = true;
 
 		//First character should be - or +
-		if( !($timezone[0] == "-" || $timezone[0] == "+")) $valid = false;
+		if( !($timezone[0] === "-" || $timezone[0] === "+")) $valid = false;
 
 		//Should have :
 		//Testing explicitly for false because index 0 == false in php
