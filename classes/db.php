@@ -2,7 +2,7 @@
  
  //Settings file
  //http://stackoverflow.com/questions/7378814/are-php-include-paths-relative-to-the-file-or-the-calling-code
- include_once(dirname(__FILE__)."/../configuration.php");
+ include_once(dirname(__FILE__)."/../config/configuration.php");
  include_once(dirname(__FILE__)."/event.php");
  include_once(dirname(__FILE__)."/error.php");
  include_once(dirname(__FILE__)."/activity.php");

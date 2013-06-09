@@ -18,13 +18,13 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
 	
     <!-- Le styles -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="libraries/bootstrap/css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="libraries/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -128,7 +128,7 @@
 	</div> <!-- /container -->
 	
 	<!-- Javascript - Placed at the end of the document so pages load faster! -->
-	<script src="bootstrap/js/bootstrap-button.js"></script>
+	<script src="libraries/bootstrap/js/bootstrap-button.js"></script>
 
 	</body>
 </html>

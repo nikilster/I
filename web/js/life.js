@@ -43,6 +43,15 @@ GOOD_THRESHOLD = 70;
 
 COLORS = ["#0000FF", "#8000FF", "#FF00FF", "#FF0080", "#FF8000", "#FFFF00", "#00FF00"];
 
+
+/*
+	Data Keys
+*/
+DATA_KEY_DATA = "data";
+DATA_KEY_DAY_NAMES = "days";
+DATA_KEY_ACTIVITIES = "activities";
+DATA_KEY_NUM_DAYS_OF_DATA = "numDaysOfData";
+
 /*
 	setUpLife
 	
@@ -50,8 +59,53 @@ COLORS = ["#0000FF", "#8000FF", "#FF00FF", "#FF0080", "#FF8000", "#FFFF00", "#00
 */
 function setUpLife(data)
 {
+	setNumberOfDaysOfData(data);
 	setUpLifeRow(data);
 	setUpTheActivities(data);
+}
+
+/*
+	Get the number of days of data
+	(ie if we only have 3 days of data, the week score is goign to count only 3 days)
+*/
+function setNumberOfDaysOfData(data)
+{
+	//Find the first day they used the product (first day with an activity)
+	var daysInfo = data.data;
+
+	//Default to today
+	var earliestDay = daysInfo.length -1;
+
+	//Find the first day that they recorded some activities
+	//For each day
+	for(var i=0; i<daysInfo.length; i++)
+	{
+		var eventsForDay = daysInfo[i];
+		for(var j=0; j<eventsForDay.length; j++)
+			if(eventsForDay[j].duration > 0)
+			{
+				//Set Day
+				earliestDay = i;
+
+				//Done!
+				break;
+			}
+
+		//If the earliest day was set
+		if(earliestDay != daysInfo.length -1)
+			break;
+	}
+
+	//Total number of days - the index of most recent day
+	//Ex: Today is most recent day
+	// 7 days - 6th index = 1 day
+	//Ex: First day is the most recent day
+	// 7 days - 0th index = 7 days
+	//Yay! :)
+	var numberDays = daysInfo.length - earliestDay;
+
+	//Set
+	data[DATA_KEY_NUM_DAYS_OF_DATA] = numberDays;
 }
 
 /*
@@ -74,10 +128,10 @@ function setUpLifeRow(data)
 function setUpLifeDayBlock(dayInfo)
 {
 	var cumulativePercentage = percentageForDay(dayInfo);
-	
+
 	//Color
 	var colorClass = getCSSColorClass(cumulativePercentage);
-	
+
 	//
 	$(LIFE_DAY_SELECTOR).text(cumulativePercentage);
 	$(LIFE_TITLE_SELECTOR).css('color', COLORS[0]);
@@ -97,7 +151,7 @@ function setUpLifeWeekGraph(data)
 	//For each day
 	for(var dayIndex=0; dayIndex < weekActivityData.length; dayIndex++)
 		weekData.push(percentageForDay(weekActivityData[dayIndex]));
-		
+
 	addGraph(weekData, dayLabels, div, "life");
 }
 
@@ -117,10 +171,11 @@ function setUpTheActivities(data)
 	//Get t data
 	var activitiesPercentages = data.data;
 	var days = data.days;
-	
+	var numDaysOfData = data[DATA_KEY_NUM_DAYS_OF_DATA];
+
 	//Setup each activity
 	for(var i=0; i < data.activities.length; i++)
-		setUpActivity(data.activities[i], activitiesPercentages, days, i+1);
+		setUpActivity(data.activities[i], activitiesPercentages, days, i+1, numDaysOfData);
 }
 
 /*
@@ -128,18 +183,18 @@ function setUpTheActivities(data)
 
 		Creates an activity (an entire row)
 */
-function setUpActivity(activity, activitiesPercentages, days, position)
+function setUpActivity(activity, activitiesPercentages, days, position, numDaysOfData)
 {
 	createActivityDiv(activity);
 	setUpActivityDay(activity, activitiesPercentages[activitiesPercentages.length-1], position);
-	setUpActivityBlockWeek(activity, activitiesPercentages);
+	setUpActivityBlockWeek(activity, activitiesPercentages, numDaysOfData);
 	setUpActivityVisualization(activity, activitiesPercentages, days);
 }
 
 function createActivityDiv(activity)
 {
 	var div =
-			
+	
 			['<div class="activity">',
 				'<div class="score block day">',
 					'<div class="title">Exercise</div>',
@@ -154,7 +209,7 @@ function createActivityDiv(activity)
 				'<div class="visualization">',
 				'</div>',
 			'</div>'].join('\n');
-		
+
 	//Create div
 	var item = $(div).attr('id', ACTIVITY_DIV_PREFIX + activity.id);
 
@@ -171,7 +226,7 @@ function setUpActivityDay(activity, dayData, position)
 	var percentage = getActivityPercentage(dayData, activity);
 	var title = activity.name;
 	var colorClass = getCSSColorClass(percentage);
-	
+
 	var activitySelector = ACTIVITY_SELECTOR+activity.id + " ";
 	$(activitySelector + ACTIVITY_DAY_TITLE_SELECTOR).html(title);
 	$(activitySelector + ACTIVITY_DAY_TITLE_SELECTOR).css('color',COLORS[position]);
@@ -182,10 +237,10 @@ function setUpActivityDay(activity, dayData, position)
 
 /* Set Up Activity Block Week
 */
-function setUpActivityBlockWeek(activity, activitiesPercentages)
+function setUpActivityBlockWeek(activity, activitiesPercentages, numDaysOfData)
 {
 	//Get Data
-	var percentage = getActivityWeekPercentage(activitiesPercentages, activity);
+	var percentage = getActivityWeekPercentage(activitiesPercentages, activity, numDaysOfData);
 	var colorClass = getCSSColorClass(percentage);
 	
 	//Activity Selector
@@ -334,25 +389,27 @@ function addGraph(data, labels, div, activityName)
 
 	//No Ticks
 	//options.xAxis.tickInterval = 0;
-		
+
 	var chart = new Highcharts.Chart(options);		
 
 }
 
 /*
 	Get activity week percentage
-	
+	Calculate it base don the number of days of (days recently the user has been using the product) data we have
 	As number
+
 */
-function getActivityWeekPercentage(weekData, activity)
+function getActivityWeekPercentage(weekData, activity, numDaysOfData)
 {
 	var totalPercentage = 0.0;
-	
+
 	//for each day
 	for(var i=0; i < weekData.length; i++)
 		totalPercentage += Math.min(100, getActivityPercentage(weekData[i], activity));
-		
-	var percentage = Math.round(totalPercentage/weekData.length);
+
+	//Use the nubmer of days
+	var percentage = Math.round(totalPercentage/numDaysOfData);
 
 	return percentage;
 }

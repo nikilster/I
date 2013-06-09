@@ -1,0 +1,2 @@
+deviceIdentifier	deviceName
+b080e85d7c3beb076d55ee6ec204378caedc7ba4	Guli Zhu iPhone 4

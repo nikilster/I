@@ -11,13 +11,13 @@
     <meta name="author" content="">
     
 	<link type="text/css" rel="stylesheet" href="css/board.css"/>
-	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="libraries/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-	<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="libraries/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 		
 </head>
 <body>
@@ -25,7 +25,7 @@
 	<script type="text/javascript" src="js/activity.js" ></script>
 	<script type="text/javascript" src="js/life.js" ></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
-	<script src="Highcharts-2.2.0/js/highcharts.js" type="text/javascript"></script>
+	<script src="libraries/Highcharts-2.2.0/js/highcharts.js" type="text/javascript"></script>
 
 	<script>
 			<?php 
