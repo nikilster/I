@@ -117,7 +117,8 @@
 				echo "<div class='well'>\n";
 					
 					//Add id as a link
-					echo "<div class='name'><a href='index.php?id=".$user['id']."'>".$user['email']."</a></div>\n";
+					//echo "<div class='name'><a href='index.php?id=".$user['id']."'>".$user['email']."</a></div>\n";
+					echo "<div class='name'>".$user['email']."</div>\n";
 					echo "<h2><div class='time'>".formatTime($time)."</div></h2>\n";
 					echo "<div class='attribute'>visualized this week</div>\n";
 				echo "</div>\n";
